@@ -1,4 +1,4 @@
-import {Avatar, Card, Chip, IconButton, Text} from 'react-native-paper';
+import { Avatar, Card, Chip, IconButton, Text, TouchableRipple } from "react-native-paper";
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import layout from '../../config/layout.config.tsx';
@@ -32,25 +32,28 @@ export default function SingleLocation(props: any) {
   };
 
   return (
-    <Card mode={'outlined'} style={styles.card} onPress={()=>{setOpened(!opened)}}>
-      <Card.Title
-        titleVariant={'titleLarge'}
-        title={location.title}
-        // subtitle={}
-        left={LeftContent}
-        right={props => (
-          <View style={styles.row}>
-            <IconButton
-              {...props}
-              icon={'map-marker'}
-              onPress={() => {
-                // console.log('Toggle Map');
-                openCurrentLocation(location.lat, location.long);
-              }}
-            />
-          </View>
-        )}
-      />
+    <Card mode={'outlined'} style={styles.card} >
+      <TouchableRipple onPress={()=>{setOpened(!opened)}}>
+        <Card.Title
+          titleVariant={'titleLarge'}
+          title={location.title}
+          // subtitle={}
+          left={LeftContent}
+          right={props => (
+            <View style={styles.row}>
+              <IconButton
+                {...props}
+                icon={'map-marker'}
+                onPress={() => {
+                  // console.log('Toggle Map');
+                  openCurrentLocation(location.lat, location.long);
+                }}
+              />
+            </View>
+          )}
+        />
+      </TouchableRipple>
+
 
       <Card.Content style={(opened?styles.chipsOpened:styles.chips)}>
         {location.tags !== '' &&
