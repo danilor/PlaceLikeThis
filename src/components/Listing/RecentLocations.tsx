@@ -10,7 +10,8 @@ import {getPlaces} from '../../lib/database.lib.tsx';
 import NoLocations from './NoLocations.tsx';
 import SingleLocation from './SingleLocation.tsx';
 
-export default function RecentLocations() {
+// @ts-ignore
+export default function RecentLocations({navigation}) {
   const [locations, setLocations] = useState<PlaceInformation[]>([]);
   const [loaded, setLoaded] = useState(false);
 

@@ -1,10 +1,17 @@
-import { Avatar, Card, Chip, IconButton, Text, TouchableRipple } from "react-native-paper";
+import {
+  Avatar,
+  Card,
+  Chip,
+  IconButton,
+  Text,
+  TouchableRipple,
+} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import layout from '../../config/layout.config.tsx';
 import openMap from 'react-native-open-maps';
 import PlaceInformation from '../../Models/PlaceInformation.model.tsx';
-import Mapped from "../Common/Mapped.tsx";
+import Mapped from '../Common/Mapped.tsx';
 
 export default function SingleLocation(props: any) {
   const [opened, setOpened] = React.useState(false);
@@ -32,8 +39,11 @@ export default function SingleLocation(props: any) {
   };
 
   return (
-    <Card mode={'outlined'} style={styles.card} >
-      <TouchableRipple onPress={()=>{setOpened(!opened)}}>
+    <Card mode={'outlined'} style={styles.card}>
+      <TouchableRipple
+        onPress={() => {
+          setOpened(!opened);
+        }}>
         <Card.Title
           titleVariant={'titleLarge'}
           title={location.title}
@@ -54,8 +64,7 @@ export default function SingleLocation(props: any) {
         />
       </TouchableRipple>
 
-
-      <Card.Content style={(opened?styles.chipsOpened:styles.chips)}>
+      <Card.Content style={opened ? styles.chipsOpened : styles.chips}>
         {location.tags !== '' &&
           // @ts-ignore
           divideAllTags(location.tags.toString()).map((tag, index) => {
@@ -70,7 +79,7 @@ export default function SingleLocation(props: any) {
           })}
       </Card.Content>
 
-      {opened?
+      {opened ? (
         <Card.Content>
           <Mapped
             latitude={location.lat}
@@ -85,8 +94,7 @@ export default function SingleLocation(props: any) {
             </Text>
           </Card.Content>
         </Card.Content>
-        :null
-      }
+      ) : null}
 
       {/*<Card.Content>*/}
       {/*  <Text variant="bodyMedium">*/}
