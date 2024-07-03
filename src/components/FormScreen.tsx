@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import layout from '../config/layout.config.tsx';
 import {
   ActivityIndicator,
@@ -8,7 +8,6 @@ import {
   IconButton,
   Modal,
   Portal,
-  Snackbar,
   Text,
   TextInput,
 } from 'react-native-paper';
@@ -20,6 +19,8 @@ import Mapped from './Common/Mapped.tsx';
 import messages from '../config/messages.config.tsx';
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
 import {savePlace} from '../lib/database.lib.tsx';
+import {useDispatch} from 'react-redux';
+import {increment} from '../store/reducers/counterSlice';
 
 // @ts-ignore
 export default function FormScreen({navigation, route, options, back}) {
@@ -32,11 +33,16 @@ export default function FormScreen({navigation, route, options, back}) {
 
   const [formInformation, setFormInformation] = useState<PlaceInformation>({
     title: '',
-    lat: 0,
-    long: 0,
+    latitude: 0,
+    longitude: 0,
     tags: '',
     description: '',
+    phone: '',
+    photo: '',
+    parking: false,
   });
+
+  const dispatch = useDispatch();
 
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
@@ -69,6 +75,7 @@ export default function FormScreen({navigation, route, options, back}) {
     savePlace(formInformation)
       .then(() => {
         console.log('Information saved');
+        dispatch(increment());
         navigation.popToTop();
       })
       .catch(error => {
@@ -79,8 +86,8 @@ export default function FormScreen({navigation, route, options, back}) {
   const openCurrentLocation = () => {
     console.log('Open current location');
     openMap({
-      latitude: formInformation.lat,
-      longitude: formInformation.long,
+      latitude: formInformation.latitude,
+      longitude: formInformation.longitude,
       zoom: 18,
     });
   };
@@ -96,8 +103,8 @@ export default function FormScreen({navigation, route, options, back}) {
         setPermission(1);
         setFormInformation({
           ...formInformation,
-          lat: location.latitude,
-          long: location.longitude,
+          latitude: location.latitude,
+          longitude: location.longitude,
         });
       })
       .catch(error => {
@@ -135,8 +142,8 @@ export default function FormScreen({navigation, route, options, back}) {
           {!showMap && <Card.Cover source={headerImage} />}
           {showMap && (
             <Mapped
-              latitude={formInformation.lat}
-              longitude={formInformation.long}
+              latitude={formInformation.latitude}
+              longitude={formInformation.longitude}
               height={195}
             />
           )}
@@ -153,13 +160,13 @@ export default function FormScreen({navigation, route, options, back}) {
                     toggleMap();
                   }}
                 />
-                <IconButton
-                  {...props}
-                  icon="map-marker"
-                  onPress={() => {
-                    openCurrentLocation();
-                  }}
-                />
+                {/*<IconButton*/}
+                {/*  {...props}*/}
+                {/*  icon="map-marker"*/}
+                {/*  onPress={() => {*/}
+                {/*    openCurrentLocation();*/}
+                {/*  }}*/}
+                {/*/>*/}
               </View>
             )}
           />
@@ -183,6 +190,12 @@ export default function FormScreen({navigation, route, options, back}) {
               numberOfLines={5}
               value={formInformation.description}
               onChangeText={value => setField('description', value.toString())}
+            />
+            <TextInput
+              style={styles.field}
+              label="Phone"
+              value={formInformation.phone}
+              onChangeText={value => setField('phone', value.toString())}
             />
             {/*<TextInput
               style={styles.field}

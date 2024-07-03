@@ -7,6 +7,8 @@ import TopNavigation from './src/components/Common/TopNavigation.tsx';
 import {useCallback, useEffect, useState} from 'react';
 import FormScreen from './src/components/FormScreen.tsx';
 import {initializeDB} from './src/lib/database.lib.tsx';
+import store from './src/store/store';
+import {Provider} from 'react-redux';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -38,28 +40,30 @@ function App() {
   // @ts-ignore
   return (
     <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={'Home'}
-          // @ts-ignore
-          screenOptions={{header: props => <TopNavigation {...props} />}}>
-          <Stack.Screen
-            name="Home"
-            component={Main}
-            options={{title: 'Place Like This', headerShown: true}}
-          />
-
-          <Stack.Screen
-            name="Form"
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={'Home'}
             // @ts-ignore
-            component={FormScreen}
-            options={{
-              title: 'Add new Place',
-              headerShown: true,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            screenOptions={{header: props => <TopNavigation {...props} />}}>
+            <Stack.Screen
+              name="Home"
+              component={Main}
+              options={{title: 'Place Like This', headerShown: true}}
+            />
+
+            <Stack.Screen
+              name="Form"
+              // @ts-ignore
+              component={FormScreen}
+              options={{
+                title: 'Add new Place',
+                headerShown: true,
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </PaperProvider>
   );
 }

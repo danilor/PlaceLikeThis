@@ -1,8 +1,8 @@
 import {Appbar, Menu, Searchbar} from 'react-native-paper';
 import {getHeaderTitle} from '@react-navigation/elements';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import theme from '../../config/theme.config.tsx';
-import {StyleSheet} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import layout from '../../config/layout.config.tsx';
 // @ts-ignore
 export default function TopNavigation({navigation, route, options, back}) {
@@ -27,6 +27,9 @@ export default function TopNavigation({navigation, route, options, back}) {
       elevated={true}
       theme={inTheme}>
       {back && <Appbar.BackAction onPress={navigation.goBack} />}
+      {!searching && !back && (
+        <Image source={layout.images.logo} style={styles.logo} />
+      )}
       {!searching && <Appbar.Content title={title} />}
 
       {searching && (
@@ -96,4 +99,9 @@ const styles = StyleSheet.create({
   search: {
     flex: 1,
   },
+  logo: {
+    width: '10%',
+    height: undefined,
+    aspectRatio: 1
+  }
 });

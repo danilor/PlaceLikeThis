@@ -25,6 +25,9 @@ CREATE TABLE IF NOT EXISTS ${dbConfig.tables.places} (
   title TEXT NOT NULL,
   tags TEXT NOT NULL,
   description TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  photo TEXT NOT NULL,
+  parking BOOLEAN DEFAULT 0,
   latitude TEXT NOT NULL,
   longitude TEXT NOT NULL,
   created_at date
@@ -51,6 +54,9 @@ export const savePlace = async (place: PlaceInformation) => {
       title, 
       tags, 
       description, 
+      phone,
+      photo,
+      parking,
       latitude, 
       longitude, 
       created_at
@@ -61,8 +67,11 @@ export const savePlace = async (place: PlaceInformation) => {
       '${place.title}', 
       '${place.tags}', 
       '${place.description}', 
-      '${place.lat}', 
-      '${place.long}', 
+      '${place.phone}',
+      '${place.photo}',
+      ${place.parking},
+      '${place.latitude}', 
+      '${place.longitude}', 
       '${new Date().toISOString().split('T')[0]}'
       )
       `;

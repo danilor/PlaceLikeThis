@@ -7,6 +7,7 @@ const windowHeight = Dimensions.get('window').height;
 let layout = {
   generalMargin: margin,
   images: {
+    logo: require('../assets/img/logo.png'),
     pattern: require('../assets/img/pattern.png'),
     houses: [
       require('../assets/img/houses/c01.png'),

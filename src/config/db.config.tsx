@@ -1,6 +1,6 @@
 const db = {
   location: 'default',
-  dbName: 'places.db',
+  dbName: 'placeslikethis.db',
   tables: {
     places: 'locations',
   },

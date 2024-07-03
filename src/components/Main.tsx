@@ -1,12 +1,9 @@
 import {StyleSheet, View} from 'react-native';
 
-import Scrollable from './Common/Scrollable.tsx';
 import layout from '../config/layout.config.tsx';
-import {FAB, Searchbar} from 'react-native-paper';
-import React, {useState} from 'react';
-import WebView from 'react-native-webview';
-import Mapped from "./Common/Mapped.tsx";
-import RecentLocations from "./Listing/RecentLocations.tsx";
+import {FAB} from 'react-native-paper';
+import React from 'react';
+import RecentLocations from './Listing/RecentLocations.tsx';
 
 // @ts-ignore
 export default function Main({navigation}) {
@@ -33,10 +30,9 @@ export default function Main({navigation}) {
   };
 
   // @ts-ignore
-  return (<View style={{...layout.styles.generalContainer}}>
-
-
-    <RecentLocations></RecentLocations>
+  return (
+    <View style={{...layout.styles.generalContainer}}>
+      <RecentLocations navigation={navigation} />
 
       <FAB
         icon="plus"
@@ -56,10 +52,9 @@ export default function Main({navigation}) {
 }
 
 const styles = StyleSheet.create({
-
   fab: {
     position: 'absolute',
-    margin: 16,
+    margin: layout.generalMargin,
     right: 0,
     bottom: 0,
     backgroundColor: layout.colors.eva02Red,
