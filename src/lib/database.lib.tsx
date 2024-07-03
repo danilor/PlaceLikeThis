@@ -104,3 +104,9 @@ export const getPlaces = async (
     throw Error('Failed to get Places from database !!!');
   }
 };
+
+export const deleteLocation = async (id: number) => {
+  const db = await getDBConnection();
+  const deleteQuery = `DELETE from ${dbConfig.tables.places} where id = ${id}`;
+  await db.executeSql(deleteQuery);
+};

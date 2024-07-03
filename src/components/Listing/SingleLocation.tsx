@@ -1,9 +1,12 @@
 import {
   Avatar,
+  Button,
   Card,
   Chip,
+  Dialog,
   Icon,
   IconButton,
+  Portal,
   Text,
   TouchableRipple,
 } from 'react-native-paper';
@@ -13,9 +16,18 @@ import layout from '../../config/layout.config.tsx';
 import PlaceInformation from '../../Models/PlaceInformation.model.tsx';
 import Mapped from '../Common/Mapped.tsx';
 import messages from '../../config/messages.config.tsx';
+import {useDispatch} from 'react-redux';
+import {decrement} from './../../store/reducers/counterSlice';
+import {deleteLocation} from '../../lib/database.lib.tsx';
 
 export default function SingleLocation(props: any) {
   const [opened, setOpened] = React.useState(false);
+
+  const [visible, setVisible] = React.useState(false);
+  const showDialog = () => setVisible(true);
+  const hideDialog = () => setVisible(false);
+
+  const dispatch = useDispatch();
 
   const location: PlaceInformation = props.location;
 
@@ -28,6 +40,14 @@ export default function SingleLocation(props: any) {
       .replaceAll(' ', ',')
       .split(',')
       .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
+  };
+
+  const deleteSingleLocation = async () => {
+    console.log('Delete Location', location.id);
+    hideDialog();
+    // @ts-ignore
+    await deleteLocation(location.id);
+    dispatch(decrement());
   };
 
   const extrasIconSize = 40;
@@ -128,10 +148,30 @@ export default function SingleLocation(props: any) {
       {/*  </Text>*/}
       {/*</Card.Content>*/}
       {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
-      {/*<Card.Actions>*/}
-      {/*  <Button>Cancel</Button>*/}
-      {/*  <Button>Ok</Button>*/}
-      {/*</Card.Actions>*/}
+      <Card.Actions>
+        <Button
+          buttonColor={'red'}
+          textColor={'white'}
+          compact={true}
+          icon="delete"
+          mode="contained"
+          onPress={showDialog}>
+          Delete
+        </Button>
+      </Card.Actions>
+
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title>{messages.deletingALocation}</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium">{messages.deleteBody}</Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={hideDialog}>Cancel</Button>
+            <Button onPress={deleteSingleLocation}>Confirm</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </Card>
   );
 }
