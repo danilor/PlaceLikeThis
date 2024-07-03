@@ -8,6 +8,7 @@ import {
   IconButton,
   Modal,
   Portal,
+  Switch,
   Text,
   TextInput,
 } from 'react-native-paper';
@@ -51,6 +52,9 @@ export default function FormScreen({navigation, route, options, back}) {
   const setField = (field: string, value: string) => {
     setFormInformation({...formInformation, [field]: value});
   };
+  const setFieldBoolean = (field: string, value: boolean) => {
+    setFormInformation({...formInformation, [field]: value});
+  };
 
   const cancelButton = () => {
     navigation.goBack();
@@ -81,15 +85,6 @@ export default function FormScreen({navigation, route, options, back}) {
       .catch(error => {
         console.error('Error saving the information', error);
       });
-  };
-
-  const openCurrentLocation = () => {
-    console.log('Open current location');
-    openMap({
-      latitude: formInformation.latitude,
-      longitude: formInformation.longitude,
-      zoom: 18,
-    });
   };
 
   const toggleMap = () => {
@@ -171,32 +166,62 @@ export default function FormScreen({navigation, route, options, back}) {
             )}
           />
           <Card.Content>
-            <TextInput
-              style={styles.field}
-              label="Title *"
-              value={formInformation.title}
-              onChangeText={value => setField('title', value.toString())}
-            />
-            <TextInput
-              style={styles.field}
-              label="Tags *"
-              value={formInformation.tags}
-              onChangeText={value => setField('tags', value.toString())}
-            />
-            <TextInput
-              style={styles.field}
-              label="Description"
-              multiline={true}
-              numberOfLines={5}
-              value={formInformation.description}
-              onChangeText={value => setField('description', value.toString())}
-            />
-            <TextInput
-              style={styles.field}
-              label="Phone"
-              value={formInformation.phone}
-              onChangeText={value => setField('phone', value.toString())}
-            />
+            <View style={styles.field}>
+              <TextInput
+                label="Title *"
+                value={formInformation.title}
+                onChangeText={value => setField('title', value.toString())}
+              />
+            </View>
+
+            <View style={styles.field}>
+              <TextInput
+                style={styles.field}
+                label="Tags *"
+                value={formInformation.tags}
+                onChangeText={value => setField('tags', value.toString())}
+              />
+            </View>
+
+            <View style={styles.field}>
+              <TextInput
+                style={styles.field}
+                label="Description"
+                multiline={true}
+                numberOfLines={5}
+                value={formInformation.description}
+                onChangeText={value =>
+                  setField('description', value.toString())
+                }
+              />
+            </View>
+
+            <View style={styles.field}>
+              <TextInput
+                style={styles.field}
+                label="Phone"
+                keyboardType={'phone-pad'}
+                value={formInformation.phone}
+                onChangeText={value => setField('phone', value.toString())}
+              />
+            </View>
+
+            <View style={[styles.field, styles.row]}>
+              <Switch
+                value={formInformation.parking}
+                onValueChange={value => {
+                  // @ts-ignore
+                  console.log('Parking', value);
+                  setFieldBoolean('parking', value);
+                }}
+              />
+              <Text variant={'bodyLarge'}>
+                {formInformation.parking
+                  ? messages.parking
+                  : messages.noParking}
+              </Text>
+            </View>
+
             {/*<TextInput
               style={styles.field}
               label="Latituded (Reaonly)"

@@ -10,7 +10,6 @@ import {
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import layout from '../../config/layout.config.tsx';
-import openMap from 'react-native-open-maps';
 import PlaceInformation from '../../Models/PlaceInformation.model.tsx';
 import Mapped from '../Common/Mapped.tsx';
 import messages from '../../config/messages.config.tsx';
@@ -20,17 +19,8 @@ export default function SingleLocation(props: any) {
 
   const location: PlaceInformation = props.location;
 
-  const LeftContent = (props: any) => (
-    <Avatar.Icon {...props} icon="map-marker" />
-  );
-  const openCurrentLocation = (lat: number, long: number) => {
-    console.log('Open current location');
-    openMap({
-      latitude: lat,
-      longitude: long,
-      zoom: 18,
-    });
-  };
+  const LeftContent = () => <Avatar.Icon size={40} icon="map-marker" />;
+
   const divideAllTags = (tags: string): string[] => {
     // @ts-ignore
     return tags
@@ -119,9 +109,7 @@ export default function SingleLocation(props: any) {
 
           <Card.Content style={styles.elementExtraContainer}>
             <Icon source="identifier" size={extrasIconSize} />
-            <Text style={styles.elementExtra}>
-              {location.id}
-            </Text>
+            <Text style={styles.elementExtra}>{location.id}</Text>
           </Card.Content>
 
           {/*<Card.Content>*/}
