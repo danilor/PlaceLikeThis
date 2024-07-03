@@ -127,10 +127,10 @@ export default function SingleLocation(props: any) {
             </Text>
           </Card.Content>
 
-          <Card.Content style={styles.elementExtraContainer}>
-            <Icon source="identifier" size={extrasIconSize} />
-            <Text style={styles.elementExtra}>{location.id}</Text>
-          </Card.Content>
+          {/*<Card.Content style={styles.elementExtraContainer}>*/}
+          {/*  <Icon source="identifier" size={extrasIconSize} />*/}
+          {/*  <Text style={styles.elementExtra}>{location.id}</Text>*/}
+          {/*</Card.Content>*/}
 
           {/*<Card.Content>*/}
           {/*  <Text>*/}
@@ -148,17 +148,27 @@ export default function SingleLocation(props: any) {
       {/*  </Text>*/}
       {/*</Card.Content>*/}
       {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
-      <Card.Actions>
-        <Button
-          buttonColor={'red'}
-          textColor={'white'}
-          compact={true}
-          icon="delete"
-          mode="contained"
-          onPress={showDialog}>
-          Delete
-        </Button>
-      </Card.Actions>
+      {opened && (
+        <Card.Actions>
+          <Button
+      
+            compact={true}
+            icon="circle-edit-outline"
+            mode="contained"
+            onPress={() => console.log('edit')}>
+            Edit
+          </Button>
+          <Button
+            buttonColor={'red'}
+            textColor={'white'}
+            compact={true}
+            icon="delete-circle-outline"
+            mode="contained"
+            onPress={showDialog}>
+            Delete
+          </Button>
+        </Card.Actions>
+      )}
 
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
