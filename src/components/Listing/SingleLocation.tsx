@@ -17,7 +17,7 @@ import PlaceInformation from '../../Models/PlaceInformation.model.tsx';
 import Mapped from '../Common/Mapped.tsx';
 import messages from '../../config/messages.config.tsx';
 import {useDispatch} from 'react-redux';
-import {decrement} from './../../store/reducers/counterSlice';
+import {decrement} from '../../store/reducers/counterSlice';
 import {deleteLocation} from '../../lib/database.lib.tsx';
 
 export default function SingleLocation(props: any) {
@@ -104,15 +104,12 @@ export default function SingleLocation(props: any) {
               height={195}
             />
           </Card.Content>
-          <Card.Content style={styles.elementExtraContainer}>
-            <Icon source="information" size={40} />
-            <Text style={styles.elementExtra}>
-              {location.description !== ''
-                ? location.description
-                : 'No Description Provided'}
-            </Text>
-          </Card.Content>
-
+          {location.description !== '' && (
+            <Card.Content style={styles.elementExtraContainer}>
+              <Icon source="information" size={40} />
+              <Text style={styles.elementExtra}>{location.description}</Text>
+            </Card.Content>
+          )}
           {location.phone !== '' && (
             <Card.Content style={styles.elementExtraContainer}>
               <Icon source="phone" size={extrasIconSize} />
@@ -151,7 +148,6 @@ export default function SingleLocation(props: any) {
       {opened && (
         <Card.Actions>
           <Button
-      
             compact={true}
             icon="circle-edit-outline"
             mode="contained"

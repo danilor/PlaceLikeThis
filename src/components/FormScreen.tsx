@@ -222,20 +222,20 @@ export default function FormScreen({navigation, route, options, back}) {
               </Text>
             </View>
 
-            {/*<TextInput
-              style={styles.field}
-              label="Latituded (Reaonly)"
-              value={formInformation.lat.toString()}
-              onChangeText={value => setField('lat', value.toString())}
-              readOnly={true}
-            />
-            <TextInput
-              style={styles.field}
-              label="Longitude (Reaonly)"
-              value={formInformation.long.toString()}
-              onChangeText={value => setField('long', value.toString())}
-              readOnly={true}
-            />*/}
+            {/*<TextInput*/}
+            {/*  style={styles.field}*/}
+            {/*  label="Latituded (Reaonly)"*/}
+            {/*  value={formInformation.latitude.toString()}*/}
+            {/*  onChangeText={value => setField('lat', value.toString())}*/}
+            {/*  readOnly={true}*/}
+            {/*/>*/}
+            {/*<TextInput*/}
+            {/*  style={styles.field}*/}
+            {/*  label="Longitude (Reaonly)"*/}
+            {/*  value={formInformation.longitude.toString()}*/}
+            {/*  onChangeText={value => setField('long', value.toString())}*/}
+            {/*  readOnly={true}*/}
+            {/*/>*/}
           </Card.Content>
 
           <Card.Actions>

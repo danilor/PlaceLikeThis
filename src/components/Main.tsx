@@ -54,7 +54,7 @@ export default function Main({navigation}) {
 const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
-    margin: layout.generalMargin,
+    margin: layout.generalMargin *2,
     right: 0,
     bottom: 0,
     backgroundColor: layout.colors.eva02Red,
