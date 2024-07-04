@@ -32,8 +32,10 @@ export default function Main({navigation}) {
   // @ts-ignore
   return (
     <View style={{...layout.styles.generalContainer}}>
-      <RecentLocations navigation={navigation} />
-
+      <View style={{flex: 12}}>
+        <RecentLocations navigation={navigation} />
+      </View>
+      {/*<View style={{flex: 1}}></View>*/}
       <FAB
         icon="plus"
         style={styles.fab}
@@ -54,10 +56,13 @@ export default function Main({navigation}) {
 const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
-    margin: layout.generalMargin *2,
+    margin: layout.generalMargin * 2,
+    // marginRight: layout.generalMargin * 2,
+    // marginBottom: layout.generalMargin * 10,
     right: 0,
     bottom: 0,
     backgroundColor: layout.colors.eva02Red,
     color: 'white',
   },
+
 });

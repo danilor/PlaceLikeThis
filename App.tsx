@@ -9,6 +9,7 @@ import FormScreen from './src/components/FormScreen.tsx';
 import {initializeDB} from './src/lib/database.lib.tsx';
 import store from './src/store/store';
 import {Provider} from 'react-redux';
+import About from './src/components/About.tsx';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -59,6 +60,15 @@ function App() {
               component={FormScreen}
               options={{
                 title: 'Add new Place',
+                headerShown: true,
+              }}
+            />
+            <Stack.Screen
+              name="About"
+              // @ts-ignore
+              component={About}
+              options={{
+                title: 'About',
                 headerShown: true,
               }}
             />

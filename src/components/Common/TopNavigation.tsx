@@ -1,11 +1,23 @@
-import {Appbar, Menu, Searchbar} from 'react-native-paper';
+import {Appbar, Menu, Searchbar, Text} from 'react-native-paper';
 import {getHeaderTitle} from '@react-navigation/elements';
 import React, {useState} from 'react';
 import theme from '../../config/theme.config.tsx';
 import {Image, StyleSheet} from 'react-native';
 import layout from '../../config/layout.config.tsx';
-// @ts-ignore
-export default function TopNavigation({navigation, route, options, back}) {
+
+type Props = {
+  navigation: any;
+  route: any;
+  options: any;
+  back: any;
+};
+
+export default function TopNavigation({
+  navigation,
+  route,
+  options,
+  back,
+}: Props) {
   const title = getHeaderTitle(options, route.name);
 
   const [visible, setVisible] = useState(false);
@@ -24,13 +36,15 @@ export default function TopNavigation({navigation, route, options, back}) {
   return (
     <Appbar.Header
       mode={!back ? 'center-aligned' : 'small'}
+      // mode={'small'}
       elevated={true}
       theme={inTheme}>
       {back && <Appbar.BackAction onPress={navigation.goBack} />}
       {!searching && !back && (
         <Image source={layout.images.logo} style={styles.logo} />
       )}
-      {!searching && <Appbar.Content title={title} />}
+      {!searching && back && <Appbar.Content title={title} />}
+      {!searching && !back && <Appbar.Content title={''} />}
 
       {searching && (
         <Searchbar
@@ -62,11 +76,21 @@ export default function TopNavigation({navigation, route, options, back}) {
         />
       )}
 
+      {!back && !searching && (
+        <Appbar.Action
+          icon="information"
+          onPress={() => {
+            navigation.navigate('About');
+          }}
+        />
+
+      )}
       {/*<Menu*/}
       {/*  visible={visible}*/}
       {/*  onDismiss={closeMenu}*/}
       {/*  anchor={*/}
       {/*    <Appbar.Action*/}
+
       {/*      icon="dots-vertical"*/}
       {/*      onPress={openMenu}*/}
       {/*    />*/}
@@ -91,6 +115,7 @@ export default function TopNavigation({navigation, route, options, back}) {
       {/*    disabled*/}
       {/*  />*/}
       {/*</Menu>*/}
+
     </Appbar.Header>
   );
 }
@@ -102,6 +127,6 @@ const styles = StyleSheet.create({
   logo: {
     width: '10%',
     height: undefined,
-    aspectRatio: 1
-  }
+    aspectRatio: 1,
+  },
 });
