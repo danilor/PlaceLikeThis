@@ -1,5 +1,5 @@
 interface PlaceInformation {
-  id?: number;
+  id?: number | null;
   title: string;
   tags?: string;
   description?: string;

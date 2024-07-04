@@ -11,8 +11,11 @@ import NoLocations from './NoLocations.tsx';
 import SingleLocation from './SingleLocation.tsx';
 import { useSelector } from "react-redux";
 
-// @ts-ignore
-export default function RecentLocations({navigation}) {
+type Props = {
+  navigation: any;
+};
+
+export default function RecentLocations({navigation}: Props) {
   const [locations, setLocations] = useState<PlaceInformation[]>([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -36,7 +39,7 @@ export default function RecentLocations({navigation}) {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {locations.map((location, index) => {
-          return <SingleLocation key={index} location={location} />;
+          return <SingleLocation key={index} navigation={navigation} location={location} />;
         })}
       </ScrollView>
     </SafeAreaView>

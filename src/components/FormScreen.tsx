@@ -15,7 +15,6 @@ import {
 import {getRandomInt} from '../lib/util.lib.tsx';
 import React, {useEffect, useState} from 'react';
 import {getGeoLocation} from '../lib/location.lib.tsx';
-import openMap from 'react-native-open-maps';
 import Mapped from './Common/Mapped.tsx';
 import messages from '../config/messages.config.tsx';
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
@@ -23,16 +22,21 @@ import {savePlace} from '../lib/database.lib.tsx';
 import {useDispatch} from 'react-redux';
 import {increment} from '../store/reducers/counterSlice';
 
-// @ts-ignore
-export default function FormScreen({navigation, route, options, back}) {
-  const [headerImage] = useState(
-    layout.images.houses[getRandomInt(0, layout.images.houses.length - 1)],
-  );
+type Props = {
+  navigation: any;
+  route: any;
+  options: any;
+  back: any;
+};
 
-  const [permission, setPermission] = useState(-1);
-  const [showMap, setShowMap] = useState(false);
-
-  const [formInformation, setFormInformation] = useState<PlaceInformation>({
+export default function FormScreen({navigation, route, options, back}: Props) {
+  let initialPermission = -1;
+  /**
+   * The initial state of the form. This will help us
+   * when we need to edit an item
+   */
+  let initialState = {
+    id: null,
     title: '',
     latitude: 0,
     longitude: 0,
@@ -41,14 +45,70 @@ export default function FormScreen({navigation, route, options, back}) {
     phone: '',
     photo: '',
     parking: false,
-  });
+  };
 
+  console.log('Route', route.params);
+
+  if (
+    route.params !== undefined &&
+    route.params.location !== undefined &&
+    route.params.location !== null
+  ) {
+    console.log('Route incoming with params of location');
+    initialState = route.params.location;
+    initialPermission = 1;
+  }
+
+  /**
+   * The formInformation object
+   */
+  const [formInformation, setFormInformation] =
+    useState<PlaceInformation>(initialState);
+
+  /**
+   * We are showing a random image every time the form is opened
+   */
+  const [headerImage] = useState(
+    layout.images.houses[getRandomInt(0, layout.images.houses.length - 1)],
+  );
+
+  /**
+   * The permission state will help us to know if we can get the location
+   * -1 means asking
+   * 0 means denied
+   * 1 means granted
+   */
+
+  const [permission, setPermission] = useState(initialPermission);
+
+  /**
+   * If the user wants to see the map instead of the image
+   */
+  const [showMap, setShowMap] = useState(false);
+  const toggleMap = () => {
+    setShowMap(!showMap);
+  };
+
+  /**
+   * This dispatch is only to notify the first page to reload all information
+   * with the new element
+   */
   const dispatch = useDispatch();
 
-  const [visible, setVisible] = React.useState(false);
+  /**
+   * This will control the modal when showing errors
+   */
+  const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
+  /******************************************************/
+
+  /**
+   * This function will help us to set the value of the fields
+   * @param field
+   * @param value
+   * */
   const setField = (field: string, value: string) => {
     setFormInformation({...formInformation, [field]: value});
   };
@@ -80,32 +140,36 @@ export default function FormScreen({navigation, route, options, back}) {
       .then(() => {
         console.log('Information saved');
         dispatch(increment());
+        // if it was a success we return to the main page
         navigation.popToTop();
+        return true;
       })
       .catch(error => {
         console.error('Error saving the information', error);
+        return false;
       });
   };
 
-  const toggleMap = () => {
-    setShowMap(!showMap);
-  };
-
+  /**
+   * This should only happen if the latitude and longitude are 0
+   */
   useEffect(() => {
-    getGeoLocation()
-      .then((location: any) => {
-        console.log('Location', location);
-        setPermission(1);
-        setFormInformation({
-          ...formInformation,
-          latitude: location.latitude,
-          longitude: location.longitude,
+    if (formInformation.latitude === 0 && formInformation.longitude === 0) {
+      getGeoLocation()
+        .then((location: any) => {
+          console.log('Location', location);
+          setPermission(1);
+          setFormInformation({
+            ...formInformation,
+            latitude: location.latitude,
+            longitude: location.longitude,
+          });
+        })
+        .catch(error => {
+          console.error('Error getting location', error);
+          setPermission(0);
         });
-      })
-      .catch(error => {
-        console.error('Error getting location', error);
-        setPermission(0);
-      });
+    }
   }, []);
 
   // @ts-ignore
@@ -143,8 +207,12 @@ export default function FormScreen({navigation, route, options, back}) {
             />
           )}
           <Card.Title
-            title="Add a new Place"
-            subtitle="Fill the form below"
+            title={
+              formInformation.id === null
+                ? messages.addNewPlace
+                : messages.editPlace
+            }
+            subtitle={messages.fillForm}
             left={props => <Avatar.Icon {...props} icon="map-marker" />}
             right={props => (
               <View style={styles.row}>

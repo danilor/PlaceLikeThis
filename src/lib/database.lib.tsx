@@ -48,7 +48,23 @@ export const initializeDB = async () => {
 export const savePlace = async (place: PlaceInformation) => {
   const db = await getDBConnection();
   console.log('Saving Place');
-  const insertQuery = `INSERT INTO ${dbConfig.tables.places} 
+
+  let query: string = '';
+
+  if (place.id !== undefined && place.id !== null && place.id !== 0) {
+    query = `UPDATE ${dbConfig.tables.places} 
+    SET 
+      title = '${place.title}', 
+      tags = '${place.tags}', 
+      description = '${place.description}', 
+      phone = '${place.phone}',
+      photo = '${place.photo}',
+      parking = ${place.parking},
+      latitude = '${place.latitude}', 
+      longitude = '${place.longitude}'
+    WHERE id = ${place.id};`;
+  } else {
+    query = `INSERT INTO ${dbConfig.tables.places} 
     (
       id, 
       title, 
@@ -75,15 +91,16 @@ export const savePlace = async (place: PlaceInformation) => {
       '${new Date().toISOString().split('T')[0]}'
       )
       `;
+  }
 
-  console.log('Query saved');
-  return db.executeSql(insertQuery);
+  // console.log('Query saved');
+  return db.executeSql(query);
 };
 
 export const getPlaces = async (
   search: string = '',
 ): Promise<PlaceInformation[]> => {
-  console.log('Getting all places');
+  // console.log('Getting all places');
   try {
     const db = await getDBConnection();
     const items: PlaceInformation[] = [];
@@ -97,7 +114,7 @@ export const getPlaces = async (
         items.push(result.rows.item(index));
       }
     });
-    console.log('Places', items);
+    // console.log('Places', items);
     return items;
   } catch (error) {
     console.error(error);

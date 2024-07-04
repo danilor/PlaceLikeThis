@@ -1,5 +1,5 @@
 import {ThemeProp} from 'react-native-paper/lib/typescript/types';
-import {MD3LightTheme as DefaultTheme, PaperProvider} from 'react-native-paper';
+import {MD3LightTheme as DefaultTheme} from 'react-native-paper';
 /*
 
   Color Palletes
@@ -197,46 +197,46 @@ const eva01DarkInverted = {
 };
 
 const eva02ColorsLight = {
-  primary: 'rgb(124, 73, 151)',
+  primary: 'rgb(190, 10, 13)',
   onPrimary: 'rgb(255, 255, 255)',
-  primaryContainer: 'rgb(246, 217, 255)',
-  onPrimaryContainer: 'rgb(48, 0, 73)',
-  secondary: 'rgb(192, 0, 15)',
+  primaryContainer: 'rgb(255, 218, 213)',
+  onPrimaryContainer: 'rgb(65, 0, 1)',
+  secondary: 'rgb(146, 76, 0)',
   onSecondary: 'rgb(255, 255, 255)',
-  secondaryContainer: 'rgb(255, 218, 213)',
-  onSecondaryContainer: 'rgb(65, 0, 2)',
-  tertiary: 'rgb(156, 65, 68)',
+  secondaryContainer: 'rgb(255, 220, 196)',
+  onSecondaryContainer: 'rgb(47, 20, 0)',
+  tertiary: 'rgb(0, 104, 116)',
   onTertiary: 'rgb(255, 255, 255)',
-  tertiaryContainer: 'rgb(255, 218, 217)',
-  onTertiaryContainer: 'rgb(65, 0, 8)',
+  tertiaryContainer: 'rgb(151, 240, 255)',
+  onTertiaryContainer: 'rgb(0, 31, 36)',
   error: 'rgb(186, 26, 26)',
   onError: 'rgb(255, 255, 255)',
   errorContainer: 'rgb(255, 218, 214)',
   onErrorContainer: 'rgb(65, 0, 2)',
   background: 'rgb(255, 251, 255)',
-  onBackground: 'rgb(29, 27, 30)',
+  onBackground: 'rgb(32, 26, 25)',
   surface: 'rgb(255, 251, 255)',
-  onSurface: 'rgb(29, 27, 30)',
-  surfaceVariant: 'rgb(234, 223, 234)',
-  onSurfaceVariant: 'rgb(75, 68, 77)',
-  outline: 'rgb(125, 116, 126)',
-  outlineVariant: 'rgb(206, 195, 206)',
+  onSurface: 'rgb(32, 26, 25)',
+  surfaceVariant: 'rgb(245, 221, 218)',
+  onSurfaceVariant: 'rgb(83, 67, 65)',
+  outline: 'rgb(133, 115, 112)',
+  outlineVariant: 'rgb(216, 194, 190)',
   shadow: 'rgb(0, 0, 0)',
   scrim: 'rgb(0, 0, 0)',
-  inverseSurface: 'rgb(51, 47, 51)',
-  inverseOnSurface: 'rgb(246, 239, 243)',
-  inversePrimary: 'rgb(231, 180, 255)',
+  inverseSurface: 'rgb(54, 47, 46)',
+  inverseOnSurface: 'rgb(251, 238, 236)',
+  inversePrimary: 'rgb(255, 180, 169)',
   elevation: {
     level0: 'transparent',
-    level1: 'rgb(248, 242, 250)',
-    level2: 'rgb(245, 237, 247)',
-    level3: 'rgb(241, 231, 244)',
-    level4: 'rgb(239, 230, 243)',
-    level5: 'rgb(237, 226, 240)',
+    level1: 'rgb(252, 239, 243)',
+    level2: 'rgb(250, 232, 236)',
+    level3: 'rgb(248, 225, 228)',
+    level4: 'rgb(247, 222, 226)',
+    level5: 'rgb(246, 217, 221)',
   },
-  surfaceDisabled: 'rgba(29, 27, 30, 0.12)',
-  onSurfaceDisabled: 'rgba(29, 27, 30, 0.38)',
-  backdrop: 'rgba(53, 46, 54, 0.4)',
+  surfaceDisabled: 'rgba(32, 26, 25, 0.12)',
+  onSurfaceDisabled: 'rgba(32, 26, 25, 0.38)',
+  backdrop: 'rgba(59, 45, 43, 0.4)',
 };
 
 const eva02ColorsDark = {
@@ -630,6 +630,6 @@ const theme: ThemeProp = {
   dark: false,
   version: 3,
   mode: 'exact',
-  colors: defaultColorsLight,
+  colors: eva02ColorsLight,
 };
 export default DefaultTheme;

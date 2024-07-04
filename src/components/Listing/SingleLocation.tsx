@@ -20,7 +20,12 @@ import {useDispatch} from 'react-redux';
 import {decrement} from '../../store/reducers/counterSlice';
 import {deleteLocation} from '../../lib/database.lib.tsx';
 
-export default function SingleLocation(props: any) {
+type Props = {
+  location: PlaceInformation;
+  navigation: any;
+};
+
+export default function SingleLocation({location, navigation}: Props) {
   const [opened, setOpened] = React.useState(false);
 
   const [visible, setVisible] = React.useState(false);
@@ -29,7 +34,7 @@ export default function SingleLocation(props: any) {
 
   const dispatch = useDispatch();
 
-  const location: PlaceInformation = props.location;
+  const singleLocation: PlaceInformation = location;
 
   const LeftContent = () => <Avatar.Icon size={40} icon="map-marker" />;
 
@@ -42,11 +47,16 @@ export default function SingleLocation(props: any) {
       .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
   };
 
+
+  const editSingleLocation = () => {
+    navigation.navigate('Form', {location: singleLocation});
+  };
+
   const deleteSingleLocation = async () => {
-    console.log('Delete Location', location.id);
+    console.log('Delete Location', singleLocation.id);
     hideDialog();
     // @ts-ignore
-    await deleteLocation(location.id);
+    await deleteLocation(singleLocation.id);
     dispatch(decrement());
   };
 
@@ -60,7 +70,7 @@ export default function SingleLocation(props: any) {
         }}>
         <Card.Title
           titleVariant={'titleLarge'}
-          title={location.title}
+          title={singleLocation.title}
           // subtitle={}
           left={LeftContent}
           right={props => (
@@ -81,9 +91,9 @@ export default function SingleLocation(props: any) {
       </TouchableRipple>
 
       <Card.Content style={opened ? styles.chipsOpened : styles.chips}>
-        {location.tags !== '' &&
+        {singleLocation.tags !== '' &&
           // @ts-ignore
-          divideAllTags(location.tags.toString()).map((tag, index) => {
+          divideAllTags(singleLocation.tags.toString()).map((tag, index) => {
             return (
               <Chip
                 key={index}
@@ -99,28 +109,28 @@ export default function SingleLocation(props: any) {
         <View>
           <Card.Content style={{marginBottom: layout.generalMargin}}>
             <Mapped
-              latitude={location.latitude}
-              longitude={location.longitude}
+              latitude={singleLocation.latitude}
+              longitude={singleLocation.longitude}
               height={195}
             />
           </Card.Content>
-          {location.description !== '' && (
+          {singleLocation.description !== '' && (
             <Card.Content style={styles.elementExtraContainer}>
               <Icon source="information" size={40} />
-              <Text style={styles.elementExtra}>{location.description}</Text>
+              <Text style={styles.elementExtra}>{singleLocation.description}</Text>
             </Card.Content>
           )}
-          {location.phone !== '' && (
+          {singleLocation.phone !== '' && (
             <Card.Content style={styles.elementExtraContainer}>
               <Icon source="phone" size={extrasIconSize} />
-              <Text style={styles.elementExtra}>{location.phone}</Text>
+              <Text style={styles.elementExtra}>{singleLocation.phone}</Text>
             </Card.Content>
           )}
 
           <Card.Content style={styles.elementExtraContainer}>
             <Icon source="car" size={extrasIconSize} />
             <Text style={styles.elementExtra}>
-              {location.parking ? messages.parking : messages.noParking}
+              {singleLocation.parking ? messages.parking : messages.noParking}
             </Text>
           </Card.Content>
 
@@ -151,7 +161,7 @@ export default function SingleLocation(props: any) {
             compact={true}
             icon="circle-edit-outline"
             mode="contained"
-            onPress={() => console.log('edit')}>
+            onPress={editSingleLocation}>
             Edit
           </Button>
           <Button
