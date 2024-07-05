@@ -231,10 +231,13 @@ export default function FormScreen({navigation, route, options, back}: Props) {
       {permission === 0 && <NoLocationPermissions headerImage={headerImage} />}
       {permission === 1 && (
         <Card mode={'outlined'} style={styles.card}>
-          {(!showMap && formInformation.photo === null) ||
-            (formInformation.photo === '' && (
+
+
+
+          {!showMap &&
+            formInformation.photo === '' && (
               <Card.Cover source={headerImage} />
-            ))}
+            )}
 
           {!showMap &&
             formInformation.photo !== null &&
@@ -249,6 +252,7 @@ export default function FormScreen({navigation, route, options, back}: Props) {
                 objectFit={'cover'}
               />
             )}
+
           {showMap && (
             <Mapped
               latitude={formInformation.latitude}
