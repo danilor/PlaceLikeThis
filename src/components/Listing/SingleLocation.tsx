@@ -36,7 +36,7 @@ export default function SingleLocation({location, navigation}: Props) {
 
   const singleLocation: PlaceInformation = location;
 
-  const LeftContent = () => <Avatar.Icon size={40} icon="map-marker" />;
+  const LeftContent = () => <Avatar.Icon size={45} icon="map-marker" />;
 
   const divideAllTags = (tags: string): string[] => {
     // @ts-ignore
@@ -146,6 +146,24 @@ export default function SingleLocation({location, navigation}: Props) {
           {/*    {location.latitude} {location.longitude}*/}
           {/*  </Text>*/}
           {/*</Card.Content>*/}
+          <Card.Actions>
+            <Button
+              compact={true}
+              icon="circle-edit-outline"
+              mode="contained"
+              onPress={editSingleLocation}>
+              Edit
+            </Button>
+            <Button
+              buttonColor={'red'}
+              textColor={'white'}
+              compact={true}
+              icon="delete-circle-outline"
+              mode="contained"
+              onPress={showDialog}>
+              Delete
+            </Button>
+          </Card.Actions>
         </View>
       ) : null}
 
@@ -157,26 +175,7 @@ export default function SingleLocation({location, navigation}: Props) {
       {/*  </Text>*/}
       {/*</Card.Content>*/}
       {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
-      {opened && (
-        <Card.Actions>
-          <Button
-            compact={true}
-            icon="circle-edit-outline"
-            mode="contained"
-            onPress={editSingleLocation}>
-            Edit
-          </Button>
-          <Button
-            buttonColor={'red'}
-            textColor={'white'}
-            compact={true}
-            icon="delete-circle-outline"
-            mode="contained"
-            onPress={showDialog}>
-            Delete
-          </Button>
-        </Card.Actions>
-      )}
+
 
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>

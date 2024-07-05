@@ -24,6 +24,8 @@ import {useDispatch} from 'react-redux';
 import {increment} from '../store/reducers/counterSlice';
 import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
 import cameraConfig from '../config/camera.config.tsx';
+import NoLocationPermissions from "./Form/NoLocationPermissions.tsx";
+import Base64Image from './Common/Base64Image.tsx';
 
 type Props = {
   navigation: any;
@@ -220,28 +222,14 @@ export default function FormScreen({navigation, route, options, back}: Props) {
   }, []);
 
   // @ts-ignore
+
   return (
     <ScrollView style={layout.styles.generalContainer}>
       {permission === -1 && (
         <ActivityIndicator size={'large'} animating={true} />
       )}
       {permission === 0 && (
-        <Card>
-          <Card.Cover source={headerImage} />
-
-          <Card.Title
-            title="Error getting location"
-            // subtitle="Fill the form below"
-            left={props => <Avatar.Icon {...props} icon="crosshairs-gps" />}
-            // right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
-          />
-          <Card.Content>
-            <Text>
-              To use this form and save new locations, please enable location
-              access for this application.
-            </Text>
-          </Card.Content>
-        </Card>
+        <NoLocationPermissions headerImage={headerImage} />
       )}
       {permission === 1 && (
         <Card mode={'outlined'}>
@@ -253,12 +241,8 @@ export default function FormScreen({navigation, route, options, back}: Props) {
           {!showMap &&
             formInformation.photo !== null &&
             formInformation.photo !== '' && (
-              <Image
-                source={{
-                  uri: `data:image/jpeg;base64,${formInformation.photo}`,
-                }}
-                style={{width: '100%', height: layout.mapSpaceSize}}
-              />
+              // @ts-ignore
+              <Base64Image photo={formInformation.photo} width={'100%'} height={layout.mapSpaceSize} />
             )}
           {showMap && (
             <Mapped
@@ -291,13 +275,6 @@ export default function FormScreen({navigation, route, options, back}: Props) {
                     toggleMap();
                   }}
                 />
-                {/*<IconButton*/}
-                {/*  {...props}*/}
-                {/*  icon="map-marker"*/}
-                {/*  onPress={() => {*/}
-                {/*    openCurrentLocation();*/}
-                {/*  }}*/}
-                {/*/>*/}
               </View>
             )}
           />
@@ -325,6 +302,7 @@ export default function FormScreen({navigation, route, options, back}: Props) {
                 label="Description"
                 multiline={true}
                 numberOfLines={5}
+                keyboardType={'default'}
                 value={formInformation.description}
                 onChangeText={value =>
                   setField('description', value.toString())

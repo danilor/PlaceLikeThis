@@ -11,5 +11,8 @@ const messages = {
   fillForm: 'Fill the form below',
   cameraError:
     'There was an error taking the photo. Please check you permissions and try again.',
+  noLocationTitle: 'Error getting location',
+  noLocationPermission:
+    'To use this form and save new locations, please enable location to access for this application and reload this application.',
 };
 export default messages;
