@@ -24,7 +24,7 @@ import {useDispatch} from 'react-redux';
 import {increment} from '../store/reducers/counterSlice';
 import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
 import cameraConfig from '../config/camera.config.tsx';
-import NoLocationPermissions from "./Form/NoLocationPermissions.tsx";
+import NoLocationPermissions from './Form/NoLocationPermissions.tsx';
 import Base64Image from './Common/Base64Image.tsx';
 
 type Props = {
@@ -228,11 +228,9 @@ export default function FormScreen({navigation, route, options, back}: Props) {
       {permission === -1 && (
         <ActivityIndicator size={'large'} animating={true} />
       )}
-      {permission === 0 && (
-        <NoLocationPermissions headerImage={headerImage} />
-      )}
+      {permission === 0 && <NoLocationPermissions headerImage={headerImage} />}
       {permission === 1 && (
-        <Card mode={'outlined'}>
+        <Card mode={'outlined'} style={styles.card}>
           {(!showMap && formInformation.photo === null) ||
             (formInformation.photo === '' && (
               <Card.Cover source={headerImage} />
@@ -241,8 +239,15 @@ export default function FormScreen({navigation, route, options, back}: Props) {
           {!showMap &&
             formInformation.photo !== null &&
             formInformation.photo !== '' && (
-              // @ts-ignore
-              <Base64Image photo={formInformation.photo} width={'100%'} height={layout.mapSpaceSize} />
+              <Base64Image
+                // @ts-ignore
+                photo={formInformation.photo}
+                width={'100%'}
+                // @ts-ignore
+                height={layout.mapSpaceSize}
+                aspectRadio={2}
+                objectFit={'cover'}
+              />
             )}
           {showMap && (
             <Mapped
@@ -388,6 +393,10 @@ export default function FormScreen({navigation, route, options, back}: Props) {
 }
 
 const styles = StyleSheet.create({
+  card: {
+    overflow: 'hidden',
+    marginBottom: layout.generalMargin,
+  },
   field: {
     marginBottom: layout.generalMargin,
   },

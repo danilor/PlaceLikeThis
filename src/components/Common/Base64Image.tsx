@@ -6,15 +6,23 @@ type Props = {
   photo: string;
   width?: string;
   height?: string;
+  aspectRadio?: number;
+  objectFit?: string;
 };
 
 export default function Base64Image(props: Props) {
-  let {photo, width, height} = props;
+  let {photo, width, height, aspectRadio, objectFit} = props;
   if (width === undefined || width === '') {
     width = '100%';
   }
   if (height === undefined || height === '') {
     height = undefined;
+  }
+  if (aspectRadio === undefined || aspectRadio === 0) {
+    aspectRadio = 1;
+  }
+  if (objectFit === undefined || objectFit === '') {
+    objectFit = 'cover';
   }
 
   const styles = StyleSheet.create({
@@ -23,6 +31,9 @@ export default function Base64Image(props: Props) {
       width: width,
       // @ts-ignore
       height: height,
+      aspectRatio: aspectRadio,
+      // @ts-ignore
+      objectFit: objectFit,
     },
   });
 

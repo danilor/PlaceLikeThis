@@ -11,6 +11,7 @@ import {initializeDB} from './src/lib/database.lib.tsx';
 import store from './src/store/store';
 import {Provider} from 'react-redux';
 import About from './src/components/About.tsx';
+import PlaceDetails from "./src/components/PlaceDetails.tsx";
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -60,6 +61,15 @@ function App() {
               name="Form"
               // @ts-ignore
               component={FormScreen}
+              options={{
+                title: 'Place Information',
+                headerShown: true,
+              }}
+            />
+            <Stack.Screen
+              name="PlaceDetails"
+              // @ts-ignore
+              component={PlaceDetails}
               options={{
                 title: 'Place Information',
                 headerShown: true,

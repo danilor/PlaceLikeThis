@@ -6,11 +6,13 @@ import {
   Dialog,
   Icon,
   IconButton,
+  MD3Theme,
   Portal,
   Text,
   TouchableRipple,
+  useTheme,
 } from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
+import {Image, ImageBase, StyleSheet, View} from 'react-native';
 import React from 'react';
 import layout from '../../config/layout.config.tsx';
 import PlaceInformation from '../../Models/PlaceInformation.model.tsx';
@@ -19,13 +21,14 @@ import messages from '../../config/messages.config.tsx';
 import {useDispatch} from 'react-redux';
 import {decrement} from '../../store/reducers/counterSlice';
 import {deleteLocation} from '../../lib/database.lib.tsx';
+import Base64Image from '../Common/Base64Image.tsx';
 
 type Props = {
   location: PlaceInformation;
   navigation: any;
 };
 
-export default function SingleLocation({location, navigation}: Props) {
+export function SingleLocation_backup({location, navigation}: Props) {
   const [opened, setOpened] = React.useState(false);
 
   const [visible, setVisible] = React.useState(false);
@@ -46,7 +49,6 @@ export default function SingleLocation({location, navigation}: Props) {
       .split(',')
       .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
   };
-
 
   const editSingleLocation = () => {
     navigation.navigate('Form', {location: singleLocation});
@@ -98,9 +100,7 @@ export default function SingleLocation({location, navigation}: Props) {
               <Chip
                 key={index}
                 icon="information"
-                onPress={() => console.log('Pressed', tag)}
-
-              >
+                onPress={() => console.log('Pressed', tag)}>
                 {tag}
               </Chip>
             );
@@ -119,7 +119,9 @@ export default function SingleLocation({location, navigation}: Props) {
           {singleLocation.description !== '' && (
             <Card.Content style={styles.elementExtraContainer}>
               <Icon source="information" size={40} />
-              <Text style={styles.elementExtra}>{singleLocation.description}</Text>
+              <Text style={styles.elementExtra}>
+                {singleLocation.description}
+              </Text>
             </Card.Content>
           )}
           {singleLocation.phone !== '' && (
@@ -176,7 +178,6 @@ export default function SingleLocation({location, navigation}: Props) {
       {/*</Card.Content>*/}
       {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
 
-
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <Dialog.Title>{messages.deletingALocation}</Dialog.Title>
@@ -192,6 +193,108 @@ export default function SingleLocation({location, navigation}: Props) {
     </Card>
   );
 }
+
+export default function SingleLocation({location, navigation}: Props) {
+  const theme: MD3Theme = useTheme();
+
+  const divideAllTags = (tags: string): string[] => {
+    // @ts-ignore
+    return tags
+      .replaceAll(';', ',')
+      .replaceAll(' ', ',')
+      .split(',')
+      .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
+  };
+
+  const iconSize: number = 35;
+
+  const goToDetails = () => {
+    console.log('Go to Details', location.title);
+    navigation.navigate('PlaceDetails', {
+      location: location,
+      title: location.title,
+    });
+  };
+
+  return (
+    <View>
+      <Card mode={'outlined'} style={styles.card}>
+        <Card.Content style={styles.row}>
+          <View style={styles.viewImage}>
+            <TouchableRipple onPress={()=>{goToDetails()}}>
+              <View>
+                {location.photo === '' && (
+                  // @ts-ignore
+                  <Image
+                    source={layout.images.defaultPlace}
+                    style={styles.avatarImage}
+                  />
+                )}
+                {location.photo !== '' && (
+                  // @ts-ignore
+                  <Base64Image photo={location.photo} width={'100%'} />
+                )}
+              </View>
+            </TouchableRipple>
+          </View>
+          <View style={styles.viewContent}>
+            <TouchableRipple onPress={()=>{goToDetails()}}>
+              <Text variant="titleLarge">{location.title}</Text>
+            </TouchableRipple>
+
+            <View style={styles.chips}>
+              {location.tags !== '' &&
+                // @ts-ignore
+                divideAllTags(location.tags.toString()).map((tag, index) => {
+                  return (
+                    <Chip
+                      key={index}
+                      compact={true}
+                      icon="information"
+                      onPress={() => console.log('Pressed', tag)}>
+                      {tag}
+                    </Chip>
+                  );
+                })}
+            </View>
+            <View style={styles.chips}>
+              {location.description !== '' && (
+                <Icon
+                  source="information"
+                  color={theme.colors.primary}
+                  size={iconSize}
+                />
+              )}
+              {location.phone !== '' && (
+                <Icon
+                  color={theme.colors.primary}
+                  source="phone"
+                  size={iconSize}
+                />
+              )}
+
+              {Boolean(location.parking) && (
+                <Icon
+                  source="car"
+                  color={theme.colors.primary}
+                  size={iconSize}
+                />
+              )}
+              {location.photo !== '' && (
+                <Icon
+                  color={theme.colors.primary}
+                  source="camera"
+                  size={iconSize}
+                />
+              )}
+            </View>
+          </View>
+        </Card.Content>
+      </Card>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
@@ -212,8 +315,8 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
     // justifyContent: 'space-between',
     gap: 5,
-    marginTop: layout.generalMargin,
-    marginBottom: layout.generalMargin,
+    // marginTop: layout.generalMargin,
+    // marginBottom: layout.generalMargin,
   },
   chipsOpened: {
     flexDirection: 'row',
@@ -240,5 +343,20 @@ const styles = StyleSheet.create({
   elementExtra: {
     flex: 1,
     alignSelf: 'center',
+  },
+
+  viewImage: {
+    flex: 3,
+  },
+  avatarImage: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1,
+    objectFit: 'cover',
+    borderRadius: 10,
+  },
+  viewContent: {
+    flex: 8,
+    marginLeft: layout.generalMargin,
   },
 });
