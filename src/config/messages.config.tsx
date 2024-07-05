@@ -9,5 +9,7 @@ const messages = {
   addNewPlace: 'Add New Place',
   editPlace: 'Edit Place',
   fillForm: 'Fill the form below',
+  cameraError:
+    'There was an error taking the photo. Please check you permissions and try again.',
 };
 export default messages;

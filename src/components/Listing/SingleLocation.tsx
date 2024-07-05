@@ -98,7 +98,9 @@ export default function SingleLocation({location, navigation}: Props) {
               <Chip
                 key={index}
                 icon="information"
-                onPress={() => console.log('Pressed', tag)}>
+                onPress={() => console.log('Pressed', tag)}
+
+              >
                 {tag}
               </Chip>
             );

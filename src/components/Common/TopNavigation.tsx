@@ -1,8 +1,8 @@
-import {Appbar, Menu, Searchbar, Text} from 'react-native-paper';
+import {Appbar, Button, Menu, Searchbar, Text} from 'react-native-paper';
 import {getHeaderTitle} from '@react-navigation/elements';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import theme from '../../config/theme.config.tsx';
-import {Image, StyleSheet} from 'react-native';
+import {DrawerLayoutAndroid, Image, StyleSheet, View} from 'react-native';
 import layout from '../../config/layout.config.tsx';
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   back: any;
 };
 
-export default function TopNavigation({
+export function TopNavigation_backup({
   navigation,
   route,
   options,
@@ -83,7 +83,6 @@ export default function TopNavigation({
             navigation.navigate('About');
           }}
         />
-
       )}
       {/*<Menu*/}
       {/*  visible={visible}*/}
@@ -115,8 +114,72 @@ export default function TopNavigation({
       {/*    disabled*/}
       {/*  />*/}
       {/*</Menu>*/}
-
     </Appbar.Header>
+  );
+}
+
+export default function TopNavigation({
+  navigation,
+  route,
+  options,
+  back,
+}: Props) {
+  const title = getHeaderTitle(options, route.name);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searching, setSearching] = React.useState(false);
+
+  const inTheme = JSON.parse(JSON.stringify(theme));
+  // @ts-ignore
+  inTheme.colors.elevation.level2 = layout.colors.eva02Red;
+  inTheme.colors.onSurface = layout.colors.justWhite;
+  inTheme.colors.onSurfaceVariant = layout.colors.justWhite;
+
+  return (
+    <View>
+      <Appbar.Header
+        mode={!back ? 'center-aligned' : 'small'}
+        // mode={'small'}
+        elevated={true}
+        theme={inTheme}>
+        {back && <Appbar.BackAction onPress={navigation.goBack} />}
+
+        {!back && <Image source={layout.images.logo} style={styles.logo} />}
+
+        {back && <Appbar.Content title={title} />}
+        {!back && <Appbar.Content title={''} />}
+
+        {!back && (
+          <Appbar.Action
+            icon={!searching ? 'magnify' : 'magnify-remove-outline'}
+            onPress={() => {
+              console.log('Search');
+              setSearching(!searching);
+            }}
+          />
+        )}
+
+          <Appbar.Action
+            icon={'information'}
+            onPress={() => {
+              console.log('Setting open');
+              navigation.navigate('About');
+            }}
+          />
+
+      </Appbar.Header>
+      {searching && (
+        <View style={styles.searchArea}>
+          <Searchbar
+            mode={'bar'}
+            searchAccessibilityLabel={'Search'}
+            clearAccessibilityLabel={'Clear'}
+            placeholder="Search"
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+          />
+        </View>
+      )}
+    </View>
   );
 }
 
@@ -128,5 +191,12 @@ const styles = StyleSheet.create({
     width: '10%',
     height: undefined,
     aspectRatio: 1,
+  },
+  searchArea: {
+    backgroundColor: layout.colors.eva02Red,
+    height: 75,
+    padding: layout.generalMargin,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import layout from '../config/layout.config.tsx';
 import {
   ActivityIndicator,
@@ -8,6 +8,7 @@ import {
   IconButton,
   Modal,
   Portal,
+  Snackbar,
   Switch,
   Text,
   TextInput,
@@ -21,6 +22,8 @@ import PlaceInformation from '../Models/PlaceInformation.model.tsx';
 import {savePlace} from '../lib/database.lib.tsx';
 import {useDispatch} from 'react-redux';
 import {increment} from '../store/reducers/counterSlice';
+import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
+import cameraConfig from '../config/camera.config.tsx';
 
 type Props = {
   navigation: any;
@@ -80,6 +83,12 @@ export default function FormScreen({navigation, route, options, back}: Props) {
    */
 
   const [permission, setPermission] = useState(initialPermission);
+
+  const [snackBarCameraVisible, setSnackBarCameraVisible] = useState(false);
+
+  const onToggleSnackBarCamera = () => setSnackBarCameraVisible(!visible);
+
+  const onDismissSnackBarCamera = () => setSnackBarCameraVisible(false);
 
   /**
    * If the user wants to see the map instead of the image
@@ -151,6 +160,44 @@ export default function FormScreen({navigation, route, options, back}: Props) {
   };
 
   /**
+   * This function will get a photo for this location
+   * https://github.com/react-native-image-picker/react-native-image-picker?tab=readme-ov-file
+   */
+  const addAPhoto = () => {
+    const r = launchCamera(cameraConfig, (response: ImagePickerResponse) => {
+      // console.log('Response = ', response);
+      if (response.didCancel) {
+        onToggleSnackBarCamera();
+        return;
+      }
+
+      if (response.errorCode !== undefined && response.errorCode !== null) {
+        onToggleSnackBarCamera();
+        return;
+      }
+
+      for (let key in response.assets) {
+        // @ts-ignore
+        if (
+          // @ts-ignore
+          response.assets[key].base64 !== undefined &&
+          // @ts-ignore
+          response.assets[key].base64 !== null
+        ) {
+          // @ts-ignore
+          const base64Image = response.assets[key].base64;
+          // console.log('Base64', base64Image.substring(0, 100));
+          setFormInformation({
+            ...formInformation,
+            photo: base64Image,
+          });
+          // console.log('Updated formInformation', formInformation);
+        }
+      }
+    });
+  };
+
+  /**
    * This should only happen if the latitude and longitude are 0
    */
   useEffect(() => {
@@ -198,12 +245,26 @@ export default function FormScreen({navigation, route, options, back}: Props) {
       )}
       {permission === 1 && (
         <Card mode={'outlined'}>
-          {!showMap && <Card.Cover source={headerImage} />}
+          {(!showMap && formInformation.photo === null) ||
+            (formInformation.photo === '' && (
+              <Card.Cover source={headerImage} />
+            ))}
+
+          {!showMap &&
+            formInformation.photo !== null &&
+            formInformation.photo !== '' && (
+              <Image
+                source={{
+                  uri: `data:image/jpeg;base64,${formInformation.photo}`,
+                }}
+                style={{width: '100%', height: layout.mapSpaceSize}}
+              />
+            )}
           {showMap && (
             <Mapped
               latitude={formInformation.latitude}
               longitude={formInformation.longitude}
-              height={195}
+              height={layout.mapSpaceSize}
             />
           )}
           <Card.Title
@@ -216,6 +277,13 @@ export default function FormScreen({navigation, route, options, back}: Props) {
             left={props => <Avatar.Icon {...props} icon="map-marker" />}
             right={props => (
               <View style={styles.row}>
+                <IconButton
+                  {...props}
+                  icon={'camera'}
+                  onPress={() => {
+                    addAPhoto();
+                  }}
+                />
                 <IconButton
                   {...props}
                   icon={!showMap ? 'map' : 'map-minus'}
@@ -290,6 +358,17 @@ export default function FormScreen({navigation, route, options, back}: Props) {
               </Text>
             </View>
 
+            {/*<View style={[styles.field, styles.row, styles.centered]}>*/}
+            {/*  <Button*/}
+            {/*    icon="camera"*/}
+            {/*    mode="contained"*/}
+            {/*    compact={false}*/}
+            {/*    accessibilityLabel={'Add Photo'}*/}
+            {/*    onPress={addAPhoto}>*/}
+            {/*    Add Photo*/}
+            {/*  </Button>*/}
+            {/*</View>*/}
+
             {/*<TextInput*/}
             {/*  style={styles.field}*/}
             {/*  label="Latituded (Reaonly)"*/}
@@ -317,6 +396,12 @@ export default function FormScreen({navigation, route, options, back}: Props) {
               contentContainerStyle={styles.modal}>
               <Text>{messages.generalError}</Text>
             </Modal>
+            <Modal
+              visible={snackBarCameraVisible}
+              onDismiss={onDismissSnackBarCamera}
+              contentContainerStyle={styles.modal}>
+              <Text>{messages.cameraError}</Text>
+            </Modal>
           </Portal>
         </Card>
       )}
@@ -335,5 +420,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: layout.generalMargin,
     margin: layout.generalMargin,
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

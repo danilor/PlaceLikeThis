@@ -6,6 +6,7 @@ const windowHeight = Dimensions.get('window').height;
 
 let layout = {
   generalMargin: margin,
+  mapSpaceSize: 195,
   images: {
     logo: require('../assets/img/logo.png'),
     pattern: require('../assets/img/pattern.png'),
@@ -62,6 +63,10 @@ let layout = {
       backgroundColor: 'transparent',
       // paddingBottom: margin*10,
     },
+  },
+  drawer:{
+    drawerWidth: 300,
+    drawerPosition: 'right',
   },
 };
 export default layout;

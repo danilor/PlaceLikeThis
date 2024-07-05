@@ -4,6 +4,7 @@ import layout from '../config/layout.config.tsx';
 import {FAB} from 'react-native-paper';
 import React from 'react';
 import RecentLocations from './Listing/RecentLocations.tsx';
+import DrawerRender from "./Common/DrawerRender.tsx";
 
 // @ts-ignore
 export default function Main({navigation}) {

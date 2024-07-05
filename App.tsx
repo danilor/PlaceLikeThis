@@ -1,5 +1,6 @@
+import 'react-native-gesture-handler';
 import Main from './src/components/Main.tsx';
-import {PaperProvider} from 'react-native-paper';
+import {Button, PaperProvider, Text} from 'react-native-paper';
 import theme from './src/config/theme.config.tsx';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,7 +14,6 @@ import About from './src/components/About.tsx';
 
 function App() {
   const Stack = createNativeStackNavigator();
-
   const [loaded, setLoaded] = useState(false);
 
   /**
@@ -39,6 +39,8 @@ function App() {
     return null;
   }
 
+
+
   // @ts-ignore
   return (
     <PaperProvider theme={theme}>
@@ -59,7 +61,7 @@ function App() {
               // @ts-ignore
               component={FormScreen}
               options={{
-                title: 'Add new Place',
+                title: 'Place Information',
                 headerShown: true,
               }}
             />
