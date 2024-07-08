@@ -12,6 +12,7 @@ let layout = {
     pattern: require('../assets/img/pattern.png'),
     arkhive: require('../assets/img/arkhive.png'),
     defaultPlace: require('../assets/img/defaultplace.png'),
+    bottomHeader: require('../assets/img/bottomheader.png'),
     houses: [
       require('../assets/img/houses/c01.png'),
       require('../assets/img/houses/c02.png'),

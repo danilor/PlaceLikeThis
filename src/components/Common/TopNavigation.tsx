@@ -2,14 +2,16 @@ import {Appbar, Button, Menu, Searchbar, Text} from 'react-native-paper';
 import {getHeaderTitle} from '@react-navigation/elements';
 import React, {useRef, useState} from 'react';
 import theme from '../../config/theme.config.tsx';
-import {DrawerLayoutAndroid, Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import layout from '../../config/layout.config.tsx';
+import { DrawerLayout } from "react-native-gesture-handler";
 
 type Props = {
   navigation: any;
   route: any;
   options: any;
   back: any;
+  drawer: any;
 };
 
 export function TopNavigation_backup({
@@ -17,6 +19,7 @@ export function TopNavigation_backup({
   route,
   options,
   back,
+  drawer
 }: Props) {
   const title = getHeaderTitle(options, route.name);
 
@@ -80,7 +83,8 @@ export function TopNavigation_backup({
         <Appbar.Action
           icon="information"
           onPress={() => {
-            navigation.navigate('About');
+            // navigation.navigate('About');
+            drawer();
           }}
         />
       )}
@@ -123,6 +127,7 @@ export default function TopNavigation({
   route,
   options,
   back,
+  drawer
 }: Props) {
   const title = getHeaderTitle(options, route.name);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -158,13 +163,22 @@ export default function TopNavigation({
           />
         )}
 
-          <Appbar.Action
+        {/*<Appbar.Action
             icon={'information'}
             onPress={() => {
               console.log('Setting open');
               navigation.navigate('About');
             }}
-          />
+          /> */}
+
+        <Appbar.Action
+          icon={'dots-vertical'}
+          onPress={() => {
+            console.log('Setting open');
+            drawer();
+            // navigation.openDrawer();
+          }}
+        />
 
       </Appbar.Header>
       {searching && (
