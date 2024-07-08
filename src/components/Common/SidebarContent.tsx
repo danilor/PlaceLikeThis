@@ -1,4 +1,4 @@
-import {Image, StyleSheet, View} from 'react-native';
+import {Alert, Image, StyleSheet, View} from 'react-native';
 import {Drawer} from 'react-native-paper';
 import layout from '../../config/layout.config.tsx';
 import {useNavigation} from '@react-navigation/native';
@@ -13,9 +13,9 @@ export default function SidebarContent({drawer}: Props) {
   const navigation = useNavigation();
 
   const navigateTo = (screen: string) => {
+    drawer();
     // @ts-ignore
     navigation.navigate(screen);
-    drawer();
   };
   return (
     <View>
@@ -26,6 +26,20 @@ export default function SidebarContent({drawer}: Props) {
       <Image source={layout.images.bottomHeader} style={styles.bottomHeader} />
 
       <Drawer.Section title="Menu">
+        <Drawer.Item
+          label="Settings"
+          icon={'tools'}
+          active={false}
+          onPress={() => {
+            // navigateTo('About');
+            // @ts-ignore
+            Alert.alert(
+              'Coming soon',
+              'This feature is not implemented yet. Keep your application updated to see future changes.',
+            );
+          }}
+        />
+
         <Drawer.Item
           label="About"
           icon={'information'}
@@ -38,11 +52,11 @@ export default function SidebarContent({drawer}: Props) {
 
       <Drawer.Section title="Extras" showDivider={false}>
         <Drawer.Item
-          label="Houses"
+          label="Places Images"
           icon={'camera-image'}
           active={false}
           onPress={() => {
-            navigateTo('Houses');
+            navigateTo('Places');
           }}
         />
       </Drawer.Section>

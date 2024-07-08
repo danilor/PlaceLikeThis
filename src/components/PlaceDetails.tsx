@@ -1,5 +1,5 @@
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, Share, ShareContent, StyleSheet, View} from 'react-native';
 import layout from '../config/layout.config.tsx';
 import {
   Button,
@@ -28,10 +28,7 @@ type Props = {
   back: any;
 };
 
-export default function PlaceDetails({
-  navigation,
-  route,
-}: Props) {
+export default function PlaceDetails({navigation, route}: Props) {
   const [headerImage] = useState(
     layout.images.houses[getRandomInt(0, layout.images.houses.length - 1)],
   );
@@ -157,6 +154,32 @@ export default function PlaceDetails({
         </Card.Content>
 
         <Card.Actions>
+          <Button
+            compact={true}
+            icon="share"
+            mode="contained"
+            onPress={() => {
+              console.log('Share');
+
+              const shareContent: ShareContent = {
+                title: location.title,
+                message:
+                  'https://www.google.com/maps/search/?api=1&query=' +
+                  location.latitude +
+                  ',' +
+                  location.longitude,
+              };
+
+              Share.share(shareContent)
+                .then((res: any) => {
+                  console.log(res);
+                })
+                .catch((err: any) => {
+                  err && console.log(err);
+                });
+            }}>
+            Share
+          </Button>
           <Button
             compact={true}
             icon="circle-edit-outline"

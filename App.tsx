@@ -14,7 +14,9 @@ import About from './src/components/About.tsx';
 import PlaceDetails from './src/components/PlaceDetails.tsx';
 import {Drawer} from 'react-native-drawer-layout';
 import SidebarContent from './src/components/Common/SidebarContent.tsx';
-import Houses from './src/components/Houses.tsx';
+import PlacesImages from './src/components/PlacesImages.tsx';
+import screenStackConfig from "./src/config/screenStack.config.tsx";
+import layout from './src/config/layout.config.tsx';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -56,6 +58,7 @@ function App() {
 
   // <DrawerNavigator />;
 
+
   // @ts-ignore
 
   // @ts-ignore
@@ -68,11 +71,13 @@ function App() {
             open={drawerOpen}
             onOpen={() => setDrawerOpen(true)}
             onClose={() => setDrawerOpen(false)}
-            drawerPosition={'right'}
+            // @ts-ignore
+            drawerPosition={layout.drawer.drawerPosition}
             // @ts-ignore
             renderDrawerContent={(props: any) => {
               return <SidebarContent {...props} drawer={changeDrawerState} />;
             }}>
+
             <Stack.Navigator
               initialRouteName={'Home'}
               screenOptions={{
@@ -81,46 +86,52 @@ function App() {
                   <TopNavigation {...props} drawer={changeDrawerState} />
                 ),
               }}>
+
               <Stack.Screen
                 name="Home"
                 component={Main}
-                options={{title: 'Place Like This', headerShown: true}}
+                // @ts-ignore
+                options={{title: 'Place Like This', ...screenStackConfig}}
               />
 
               <Stack.Screen
                 name="Form"
                 // @ts-ignore
                 component={FormScreen}
+                // @ts-ignore
                 options={{
                   title: 'Place Information',
-                  headerShown: true,
+                  ...screenStackConfig,
                 }}
               />
               <Stack.Screen
                 name="PlaceDetails"
                 // @ts-ignore
                 component={PlaceDetails}
+                // @ts-ignore
                 options={{
                   title: 'Place Information',
-                  headerShown: true,
+                  ...screenStackConfig,
                 }}
               />
               <Stack.Screen
                 name="About"
                 // @ts-ignore
                 component={About}
+                // @ts-ignore
                 options={{
                   title: 'About',
-                  headerShown: true,
+                  ...screenStackConfig,
                 }}
               />
               <Stack.Screen
-                name="Houses"
+                name="Places"
                 // @ts-ignore
-                component={Houses}
+                component={PlacesImages}
+                // @ts-ignore
                 options={{
-                  title: 'Houses',
-                  headerShown: true,
+                  title: 'Places Images',
+                  ...screenStackConfig,
                 }}
               />
             </Stack.Navigator>

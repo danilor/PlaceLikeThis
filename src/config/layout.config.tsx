@@ -4,6 +4,7 @@ import {Dimensions} from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 let layout = {
   generalMargin: margin,
   mapSpaceSize: 195,
@@ -20,6 +21,20 @@ let layout = {
       require('../assets/img/houses/c04.png'),
       require('../assets/img/houses/c05.png'),
       require('../assets/img/houses/c06.png'),
+      require('../assets/img/houses/c07.png'),
+      require('../assets/img/houses/c08.png'),
+      require('../assets/img/houses/c09.png'),
+      require('../assets/img/houses/c10.png'),
+      require('../assets/img/houses/c11.png'),
+      require('../assets/img/houses/c12.png'),
+      require('../assets/img/houses/c13.png'),
+      require('../assets/img/houses/c14.png'),
+      require('../assets/img/houses/c15.png'),
+      require('../assets/img/houses/c16.png'),
+      require('../assets/img/houses/c17.png'),
+      require('../assets/img/houses/c18.png'),
+      require('../assets/img/houses/c19.png'),
+      require('../assets/img/houses/c20.png'),
     ],
     icons: {
       twitter: require('../assets/img/icons/twitter.png'),
