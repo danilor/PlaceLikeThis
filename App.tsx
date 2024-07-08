@@ -14,6 +14,7 @@ import About from './src/components/About.tsx';
 import PlaceDetails from './src/components/PlaceDetails.tsx';
 import {Drawer} from 'react-native-drawer-layout';
 import SidebarContent from './src/components/Common/SidebarContent.tsx';
+import Houses from './src/components/Houses.tsx';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -21,7 +22,6 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
-
 
   /**
    * Here we should have the process of DB creation in case it is not created yet
@@ -58,26 +58,29 @@ function App() {
 
   // @ts-ignore
 
+  // @ts-ignore
   return (
     <PaperProvider theme={theme}>
       <Provider store={store}>
-
-
-          <NavigationContainer>
-            <Drawer
-              drawerType={'slide'}
-              open={drawerOpen}
-              onOpen={() => setDrawerOpen(true)}
-              onClose={() => setDrawerOpen(false)}
-              drawerPosition={'right'}
-              // @ts-ignore
-              renderDrawerContent={(props: any) => {
-                return <SidebarContent {...props} drawer={changeDrawerState} />;
-              }}>
+        <NavigationContainer>
+          <Drawer
+            drawerType={'slide'}
+            open={drawerOpen}
+            onOpen={() => setDrawerOpen(true)}
+            onClose={() => setDrawerOpen(false)}
+            drawerPosition={'right'}
+            // @ts-ignore
+            renderDrawerContent={(props: any) => {
+              return <SidebarContent {...props} drawer={changeDrawerState} />;
+            }}>
             <Stack.Navigator
               initialRouteName={'Home'}
-              // @ts-ignore
-              screenOptions={{header: props => <TopNavigation {...props} drawer={changeDrawerState} />}}>
+              screenOptions={{
+                header: props => (
+                  // @ts-ignore
+                  <TopNavigation {...props} drawer={changeDrawerState} />
+                ),
+              }}>
               <Stack.Screen
                 name="Home"
                 component={Main}
@@ -111,10 +114,18 @@ function App() {
                   headerShown: true,
                 }}
               />
+              <Stack.Screen
+                name="Houses"
+                // @ts-ignore
+                component={Houses}
+                options={{
+                  title: 'Houses',
+                  headerShown: true,
+                }}
+              />
             </Stack.Navigator>
-            </Drawer>
-          </NavigationContainer>
-
+          </Drawer>
+        </NavigationContainer>
       </Provider>
     </PaperProvider>
   );

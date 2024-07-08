@@ -1,8 +1,7 @@
 import {Image, StyleSheet, View} from 'react-native';
 import {Drawer} from 'react-native-paper';
-import {useState} from 'react';
 import layout from '../../config/layout.config.tsx';
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {
   drawer: any;
@@ -35,7 +34,17 @@ export default function SidebarContent({drawer}: Props) {
             navigateTo('About');
           }}
         />
+      </Drawer.Section>
 
+      <Drawer.Section title="Extras" showDivider={false}>
+        <Drawer.Item
+          label="Houses"
+          icon={'camera-image'}
+          active={false}
+          onPress={() => {
+            navigateTo('Houses');
+          }}
+        />
       </Drawer.Section>
     </View>
   );

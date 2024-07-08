@@ -157,6 +157,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: layout.generalMargin,
+
   },
   aboutContainer: {
     // backgroundColor: layout.colors.eva02Red,
@@ -167,12 +168,12 @@ const styles = StyleSheet.create({
   arkhiveLogo: {
     width: '40%',
     height: undefined,
-    aspectRatio: 437 / 307,
+    aspectRatio: layout.aspectsRadio.logo,
   },
   bottomImage:{
     width: '100%',
     height: undefined,
-    aspectRatio: 806 / 461,
+    aspectRatio: layout.aspectsRadio.houses,
   },
   aboutText: {
     marginBottom: layout.generalMargin,

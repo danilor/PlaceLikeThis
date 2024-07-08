@@ -70,5 +70,9 @@ let layout = {
     drawerWidth: 300,
     drawerPosition: 'right',
   },
+  aspectsRadio: {
+    houses: 806 / 461,
+    logo: 437 / 307
+  }
 };
 export default layout;
