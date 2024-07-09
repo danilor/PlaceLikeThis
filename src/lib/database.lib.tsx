@@ -9,13 +9,13 @@ import PlaceInformation from '../Models/PlaceInformation.model.tsx';
 enablePromise(true);
 
 export const getDBConnection = async () => {
-  console.log('DB Connection');
+  // console.log('DB Connection');
   // @ts-ignore
   return openDatabase({name: dbConfig.dbName, location: dbConfig.location});
 };
 
 export const createTable = async (db: SQLiteDatabase) => {
-  console.log('Creating table if it does not exist');
+  // console.log('Creating table if it does not exist');
   // create table if not exists
   //   id INTEGER PRIMARY KEY,
   const query = `
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS ${dbConfig.tables.places} (
 };
 
 export const initializeDB = async () => {
-  console.log('Initializing DB');
+  // console.log('Initializing DB');
   const db = await getDBConnection();
   await createTable(db);
   return db;
@@ -47,7 +47,7 @@ export const initializeDB = async () => {
 
 export const savePlace = async (place: PlaceInformation) => {
   const db = await getDBConnection();
-  console.log('Saving Place');
+  // console.log('Saving Place');
 
   let query: string = '';
 
@@ -106,7 +106,13 @@ export const getPlaces = async (
     const items: PlaceInformation[] = [];
     let query = `SELECT * FROM ${dbConfig.tables.places} ORDER BY id DESC;`;
     if (search !== '') {
-      query = `SELECT * FROM ${dbConfig.tables.places} WHERE title LIKE '%${search}%' OR tags LIKE '%${search}%' ORDER BY id DESC;`;
+      console.log('Querying with search', search);
+      query = `SELECT 
+                    * FROM ${dbConfig.tables.places} 
+                WHERE title LIKE '%${search}%' 
+                    OR tags LIKE '%${search}%' 
+                    OR description LIKE '%${search}%' 
+                ORDER BY id DESC;`;
     }
     const results = await db.executeSql(query);
     results.forEach(result => {

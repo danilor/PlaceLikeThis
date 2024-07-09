@@ -64,6 +64,10 @@ export function SingleLocation_backup({location, navigation}: Props) {
 
   const extrasIconSize = 40;
 
+  const chipPressed = (tag: string) => {
+    navigation.navigate('SearchResults', {searchQuery: tag});
+  };
+
   return (
     <Card mode={'outlined'} style={styles.card}>
       <TouchableRipple
@@ -100,7 +104,9 @@ export function SingleLocation_backup({location, navigation}: Props) {
               <Chip
                 key={index}
                 icon="information"
-                onPress={() => console.log('Pressed', tag)}>
+                onPress={() => {
+                  chipPressed(tag.toString());
+                }}>
                 {tag}
               </Chip>
             );
@@ -216,12 +222,19 @@ export default function SingleLocation({location, navigation}: Props) {
     });
   };
 
+  const chipPressed = (tag: string) => {
+    navigation.navigate('SearchResults', {searchQuery: tag});
+  };
+
   return (
     <View>
       <Card mode={'outlined'} style={styles.card}>
         <Card.Content style={styles.row}>
           <View style={styles.viewImage}>
-            <TouchableRipple onPress={()=>{goToDetails()}}>
+            <TouchableRipple
+              onPress={() => {
+                goToDetails();
+              }}>
               <View>
                 {location.photo === '' && (
                   // @ts-ignore
@@ -238,7 +251,10 @@ export default function SingleLocation({location, navigation}: Props) {
             </TouchableRipple>
           </View>
           <View style={styles.viewContent}>
-            <TouchableRipple onPress={()=>{goToDetails()}}>
+            <TouchableRipple
+              onPress={() => {
+                goToDetails();
+              }}>
               <Text variant="titleLarge">{location.title}</Text>
             </TouchableRipple>
 
@@ -251,7 +267,7 @@ export default function SingleLocation({location, navigation}: Props) {
                       key={index}
                       compact={true}
                       icon="information"
-                      onPress={() => console.log('Pressed', tag)}>
+                      onPress={() => chipPressed(tag.toString())}>
                       {tag}
                     </Chip>
                   );

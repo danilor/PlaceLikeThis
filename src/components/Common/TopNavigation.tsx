@@ -139,6 +139,11 @@ export default function TopNavigation({
   inTheme.colors.onSurface = layout.colors.justWhite;
   inTheme.colors.onSurfaceVariant = layout.colors.justWhite;
 
+  const onSearch = () => {
+    // console.log('Searching for:', searchQuery);
+    navigation.navigate('SearchResults', {searchQuery: searchQuery});
+  };
+
   return (
     <View>
       <Appbar.Header
@@ -184,6 +189,8 @@ export default function TopNavigation({
       {searching && (
         <View style={styles.searchArea}>
           <Searchbar
+            returnKeyType={'search'}
+            onSubmitEditing={onSearch}
             mode={'bar'}
             searchAccessibilityLabel={'Search'}
             clearAccessibilityLabel={'Clear'}

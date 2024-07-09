@@ -218,6 +218,7 @@ export default function PlaceDetails({navigation, route}: Props) {
 const styles = StyleSheet.create({
   card: {
     overflow: 'hidden',
+    marginBottom: layout.generalMargin * 2,
   },
   field: {
     marginBottom: layout.generalMargin,

@@ -15,8 +15,9 @@ import PlaceDetails from './src/components/PlaceDetails.tsx';
 import {Drawer} from 'react-native-drawer-layout';
 import SidebarContent from './src/components/Common/SidebarContent.tsx';
 import PlacesImages from './src/components/PlacesImages.tsx';
-import screenStackConfig from "./src/config/screenStack.config.tsx";
+import screenStackConfig from './src/config/screenStack.config.tsx';
 import layout from './src/config/layout.config.tsx';
+import SearchResults from "./src/components/SearchResults.tsx";
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -58,7 +59,6 @@ function App() {
 
   // <DrawerNavigator />;
 
-
   // @ts-ignore
 
   // @ts-ignore
@@ -77,7 +77,6 @@ function App() {
             renderDrawerContent={(props: any) => {
               return <SidebarContent {...props} drawer={changeDrawerState} />;
             }}>
-
             <Stack.Navigator
               initialRouteName={'Home'}
               screenOptions={{
@@ -86,12 +85,19 @@ function App() {
                   <TopNavigation {...props} drawer={changeDrawerState} />
                 ),
               }}>
-
               <Stack.Screen
                 name="Home"
                 component={Main}
                 // @ts-ignore
                 options={{title: 'Place Like This', ...screenStackConfig}}
+              />
+
+              <Stack.Screen
+                name="SearchResults"
+                // @ts-ignore
+                component={SearchResults}
+                // @ts-ignore
+                options={{title: 'Search Results', ...screenStackConfig}}
               />
 
               <Stack.Screen

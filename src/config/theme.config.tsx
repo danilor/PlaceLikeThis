@@ -1,5 +1,5 @@
 import {ThemeProp} from 'react-native-paper/lib/typescript/types';
-import {MD3LightTheme as DefaultTheme} from 'react-native-paper';
+import {MD3LightTheme as DefaultTheme, MD3DarkTheme as DefaultDark} from 'react-native-paper';
 /*
 
   Color Palletes

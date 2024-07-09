@@ -75,7 +75,7 @@ let layout = {
   styles: {
     generalContainer: {
       flex: 1,
-      margin: margin,
+      padding: margin,
       // height: windowHeight,
       backgroundColor: 'transparent',
       // paddingBottom: margin*10,

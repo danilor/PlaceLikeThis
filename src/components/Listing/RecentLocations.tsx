@@ -13,16 +13,19 @@ import { useSelector } from "react-redux";
 
 type Props = {
   navigation: any;
+  searchTerm?: string;
 };
 
-export default function RecentLocations({navigation}: Props) {
+export default function RecentLocations({navigation, searchTerm}: Props) {
   const [locations, setLocations] = useState<PlaceInformation[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   const count: number = useSelector((state: any) => state.counter.value);
 
+  // console.log('Search:', searchTerm);
+
   useEffect(() => {
-    getPlaces().then(places => {
+    getPlaces(searchTerm).then(places => {
       setLocations(places);
       setLoaded(true);
     });

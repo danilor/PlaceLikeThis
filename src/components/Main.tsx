@@ -4,7 +4,6 @@ import layout from '../config/layout.config.tsx';
 import {FAB} from 'react-native-paper';
 import React from 'react';
 import RecentLocations from './Listing/RecentLocations.tsx';
-import DrawerRender from "./Common/DrawerRender.tsx";
 
 // @ts-ignore
 export default function Main({navigation}) {
@@ -65,5 +64,4 @@ const styles = StyleSheet.create({
     backgroundColor: layout.colors.eva02Red,
     color: 'white',
   },
-
 });
