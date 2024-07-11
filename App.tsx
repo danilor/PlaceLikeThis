@@ -47,7 +47,7 @@ function App() {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const db = await initializeDB();
       const settings = await getSettings();
-      // console.log('Settings', settings);
+      console.log('Settings', settings);
       dispatch(setSettings(settings));
       setLoaded(true);
     } catch (error) {

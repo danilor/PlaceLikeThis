@@ -234,7 +234,7 @@ export default function SettingsScreen({navigation}) {
         <ScrollView>
           <SettingScreenBlock
             navigation={navigation}
-            title="Camera Settings"
+            title="Camera"
             icon={'camera'}>
             <SettingsScreenItem
               icon={'image-size-select-large'}
@@ -245,6 +245,7 @@ export default function SettingsScreen({navigation}) {
                 {label: '500x500', value: '500'},
                 {label: '1000x1000', value: '1000'},
                 {label: '1500x1500', value: '1500'},
+                {label: '2000x2000', value: '2000'},
               ]}
               zIndex={2000}
               zIndexInverse={1000}
@@ -256,6 +257,7 @@ export default function SettingsScreen({navigation}) {
               name={'quality'}
               type={'select'}
               items={[
+                {label: 'Very Low', value: '0.3'},
                 {label: 'Low', value: '0.5'},
                 {label: 'Medium', value: '0.8'},
                 {label: 'High', value: '1'},
@@ -269,6 +271,19 @@ export default function SettingsScreen({navigation}) {
               label={'Save to Gallery'}
               name={'saveGallery'}
               type={'switch'}
+            />
+          </SettingScreenBlock>
+
+          <SettingScreenBlock
+            navigation={navigation}
+            title="Location"
+            icon={'map'}>
+            <SettingsScreenItem
+              icon={'map-marker'}
+              label={'Use Precise Location'}
+              name={'preciseLocation'}
+              type={'switch'}
+              divider={false}
             />
           </SettingScreenBlock>
 

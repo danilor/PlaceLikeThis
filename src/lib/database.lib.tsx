@@ -5,7 +5,7 @@ import {
 } from 'react-native-sqlite-storage';
 import dbConfig from '../config/db.config.tsx';
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
-import settings from '../config/settigs.config.tsx';
+import settings from "../config/settigs.config.tsx";
 
 enablePromise(true);
 
@@ -53,10 +53,10 @@ export const initializeDB = async () => {
   const db = await getDBConnection();
   await createTable(db);
 
-  // Object.keys(settings.defaultSettings).forEach(async key => {
-  //   // @ts-ignore
-  //   const r = await saveSettings(key, settings.defaultSettings[key].toString(),'IGNORE');
-  // });
+  Object.keys(settings.defaultSettings).forEach(async key => {
+    // @ts-ignore
+    const r = await saveSettings(key, settings.defaultSettings[key].toString(),'IGNORE');
+  });
 
   return db;
 };
