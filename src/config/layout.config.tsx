@@ -4,7 +4,6 @@ import {Dimensions} from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
 let layout = {
   generalMargin: margin,
   mapSpaceSize: 195,
@@ -43,6 +42,28 @@ let layout = {
       box: require('../assets/img/icons/box.png'),
       facebook: require('../assets/img/icons/facebook.png'),
     },
+    settingIcons:{
+      about: require('../assets/img/icons/settings/about.png'),
+      airplane: require('../assets/img/icons/settings/airplane.png'),
+      apps: require('../assets/img/icons/settings/apps.png'),
+      battery: require('../assets/img/icons/settings/battery.png'),
+      bluetooth: require('../assets/img/icons/settings/bluetooth.png'),
+      cellular: require('../assets/img/icons/settings/cellular.png'),
+      control: require('../assets/img/icons/settings/control.png'),
+      data: require('../assets/img/icons/settings/data.png'),
+      display: require('../assets/img/icons/settings/display.png'),
+      display2: require('../assets/img/icons/settings/display2.png'),
+      dnd: require('../assets/img/icons/settings/dnd.png'),
+      general: require('../assets/img/icons/settings/general.png'),
+      hotspot: require('../assets/img/icons/settings/hotspot.png'),
+      memory: require('../assets/img/icons/settings/memory.png'),
+      more: require('../assets/img/icons/settings/more.png'),
+      notifications: require('../assets/img/icons/settings/notifications.png'),
+      sound: require('../assets/img/icons/settings/sound.png'),
+      storage: require('../assets/img/icons/settings/storage.png'),
+      user: require('../assets/img/icons/settings/user.png'),
+      wifi: require('../assets/img/icons/settings/wifi.png'),
+    }
   },
   colors: {
     eva02Red: '#ed2323',
@@ -77,17 +98,28 @@ let layout = {
       flex: 1,
       padding: margin,
       // height: windowHeight,
-      backgroundColor: 'transparent',
+      // backgroundColor: 'transparent',
+      backgroundColor: '#dddddd',
+      // paddingBottom: margin*10,
+    },
+    sideStretchContainer: {
+      flex: 1,
+      // padding: margin,
+      paddingTop: margin,
+      paddingBottom: margin,
+      // height: windowHeight,
+      // backgroundColor: 'transparent',
+      backgroundColor: '#dddddd',
       // paddingBottom: margin*10,
     },
   },
-  drawer:{
+  drawer: {
     drawerWidth: 300,
     drawerPosition: 'right',
   },
   aspectsRadio: {
     houses: 806 / 461,
-    logo: 437 / 307
-  }
+    logo: 437 / 307,
+  },
 };
 export default layout;

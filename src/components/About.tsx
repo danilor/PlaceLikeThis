@@ -134,8 +134,7 @@ export default function About() {
                 </Text>
                 <Divider style={styles.aboutText} />
                 <Text style={[styles.aboutText, styles.italic]}>
-                  Don't let borders separate great minds, and don't let distance
-                  to broken bonds between friends.
+                  Don't let borders separate great minds, and don't let distance break bonds between friends.
                 </Text>
                 <Image style={styles.bottomImage} source={headerImage} />
               </Card.Content>

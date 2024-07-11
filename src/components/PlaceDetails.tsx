@@ -20,6 +20,7 @@ import Mapped from './Common/Mapped.tsx';
 import {deleteLocation} from '../lib/database.lib.tsx';
 import {decrement} from '../store/reducers/counterSlice';
 import {useDispatch} from 'react-redux';
+import ChipTags from './Common/ChipTags.tsx';
 
 type Props = {
   navigation: any;
@@ -43,15 +44,6 @@ export default function PlaceDetails({navigation, route}: Props) {
   const location: PlaceInformation = route.params.location;
   const iconSize: number = 35;
 
-  const divideAllTags = (tags: string): string[] => {
-    // @ts-ignore
-    return tags
-      .replaceAll(';', ',')
-      .replaceAll(' ', ',')
-      .split(',')
-      .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
-  };
-
   const deleteSingleLocation = async () => {
     console.log('Delete Location', location.id);
     hideDialog();
@@ -72,7 +64,7 @@ export default function PlaceDetails({navigation, route}: Props) {
 
   return (
     <ScrollView style={layout.styles.generalContainer}>
-      <Card mode={'outlined'} style={styles.card}>
+      <Card mode={'elevated'} style={styles.card}>
         {location.photo === null ||
           (location.photo === '' && <Card.Cover source={headerImage} />)}
         {location.photo !== null && location.photo !== '' && (
@@ -87,19 +79,12 @@ export default function PlaceDetails({navigation, route}: Props) {
 
         <Card.Title titleVariant={'titleLarge'} title={location.title} />
 
-        <Card.Content style={styles.chipsOpened}>
-          {location.tags !== '' &&
-            // @ts-ignore
-            divideAllTags(location.tags.toString()).map((tag, index) => {
-              return (
-                <Chip
-                  key={index}
-                  icon="information"
-                  onPress={() => console.log('Pressed', tag)}>
-                  {tag}
-                </Chip>
-              );
-            })}
+        <Card.Content>
+          <ChipTags
+            style={styles.chipsOpened}
+            navigation={navigation}
+            tags={location.tags!.toString()}
+          />
         </Card.Content>
 
         {location.description !== '' && (

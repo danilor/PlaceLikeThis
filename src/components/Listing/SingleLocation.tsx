@@ -1,216 +1,26 @@
 import {
-  Avatar,
-  Button,
   Card,
-  Chip,
-  Dialog,
   Icon,
-  IconButton,
   MD3Theme,
-  Portal,
   Text,
   TouchableRipple,
   useTheme,
 } from 'react-native-paper';
-import {Image, ImageBase, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import layout from '../../config/layout.config.tsx';
 import PlaceInformation from '../../Models/PlaceInformation.model.tsx';
-import Mapped from '../Common/Mapped.tsx';
-import messages from '../../config/messages.config.tsx';
-import {useDispatch} from 'react-redux';
-import {decrement} from '../../store/reducers/counterSlice';
-import {deleteLocation} from '../../lib/database.lib.tsx';
+
 import Base64Image from '../Common/Base64Image.tsx';
+import ChipTags from '../Common/ChipTags.tsx';
 
 type Props = {
   location: PlaceInformation;
   navigation: any;
 };
 
-export function SingleLocation_backup({location, navigation}: Props) {
-  const [opened, setOpened] = React.useState(false);
-
-  const [visible, setVisible] = React.useState(false);
-  const showDialog = () => setVisible(true);
-  const hideDialog = () => setVisible(false);
-
-  const dispatch = useDispatch();
-
-  const singleLocation: PlaceInformation = location;
-
-  const LeftContent = () => <Avatar.Icon size={45} icon="map-marker" />;
-
-  const divideAllTags = (tags: string): string[] => {
-    // @ts-ignore
-    return tags
-      .replaceAll(';', ',')
-      .replaceAll(' ', ',')
-      .split(',')
-      .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
-  };
-
-  const editSingleLocation = () => {
-    navigation.navigate('Form', {location: singleLocation});
-  };
-
-  const deleteSingleLocation = async () => {
-    console.log('Delete Location', singleLocation.id);
-    hideDialog();
-    // @ts-ignore
-    await deleteLocation(singleLocation.id);
-    dispatch(decrement());
-  };
-
-  const extrasIconSize = 40;
-
-  const chipPressed = (tag: string) => {
-    navigation.navigate('SearchResults', {searchQuery: tag});
-  };
-
-  return (
-    <Card mode={'outlined'} style={styles.card}>
-      <TouchableRipple
-        onPress={() => {
-          setOpened(!opened);
-        }}>
-        <Card.Title
-          titleVariant={'titleLarge'}
-          title={singleLocation.title}
-          // subtitle={}
-          left={LeftContent}
-          right={props => (
-            <View style={styles.row}>
-              <IconButton
-                {...props}
-                style={{...(opened ? styles.notRotated : styles.rotated)}}
-                icon={'apple-keyboard-control'}
-                onPress={() => {
-                  // console.log('Toggle Map');
-                  // openCurrentLocation(location.lat, location.long);
-                  setOpened(!opened);
-                }}
-              />
-            </View>
-          )}
-        />
-      </TouchableRipple>
-
-      <Card.Content style={opened ? styles.chipsOpened : styles.chips}>
-        {singleLocation.tags !== '' &&
-          // @ts-ignore
-          divideAllTags(singleLocation.tags.toString()).map((tag, index) => {
-            return (
-              <Chip
-                key={index}
-                icon="information"
-                onPress={() => {
-                  chipPressed(tag.toString());
-                }}>
-                {tag}
-              </Chip>
-            );
-          })}
-      </Card.Content>
-
-      {opened ? (
-        <View>
-          <Card.Content style={{marginBottom: layout.generalMargin}}>
-            <Mapped
-              latitude={singleLocation.latitude}
-              longitude={singleLocation.longitude}
-              height={195}
-            />
-          </Card.Content>
-          {singleLocation.description !== '' && (
-            <Card.Content style={styles.elementExtraContainer}>
-              <Icon source="information" size={40} />
-              <Text style={styles.elementExtra}>
-                {singleLocation.description}
-              </Text>
-            </Card.Content>
-          )}
-          {singleLocation.phone !== '' && (
-            <Card.Content style={styles.elementExtraContainer}>
-              <Icon source="phone" size={extrasIconSize} />
-              <Text style={styles.elementExtra}>{singleLocation.phone}</Text>
-            </Card.Content>
-          )}
-
-          <Card.Content style={styles.elementExtraContainer}>
-            <Icon source="car" size={extrasIconSize} />
-            <Text style={styles.elementExtra}>
-              {singleLocation.parking ? messages.parking : messages.noParking}
-            </Text>
-          </Card.Content>
-
-          {/*<Card.Content style={styles.elementExtraContainer}>*/}
-          {/*  <Icon source="identifier" size={extrasIconSize} />*/}
-          {/*  <Text style={styles.elementExtra}>{location.id}</Text>*/}
-          {/*</Card.Content>*/}
-
-          {/*<Card.Content>*/}
-          {/*  <Text>*/}
-          {/*    {location.latitude} {location.longitude}*/}
-          {/*  </Text>*/}
-          {/*</Card.Content>*/}
-          <Card.Actions>
-            <Button
-              compact={true}
-              icon="circle-edit-outline"
-              mode="contained"
-              onPress={editSingleLocation}>
-              Edit
-            </Button>
-            <Button
-              buttonColor={'red'}
-              textColor={'white'}
-              compact={true}
-              icon="delete-circle-outline"
-              mode="contained"
-              onPress={showDialog}>
-              Delete
-            </Button>
-          </Card.Actions>
-        </View>
-      ) : null}
-
-      {/*<Card.Content>*/}
-      {/*  <Text variant="bodyMedium">*/}
-      {/*    {location.description !== ''*/}
-      {/*      ? location.description*/}
-      {/*      : 'No Description Provided'}*/}
-      {/*  </Text>*/}
-      {/*</Card.Content>*/}
-      {/*<Card.Cover source={{ uri: 'https://picsum.photos/700' }} />*/}
-
-      <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>{messages.deletingALocation}</Dialog.Title>
-          <Dialog.Content>
-            <Text variant="bodyMedium">{messages.deleteBody}</Text>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog}>Cancel</Button>
-            <Button onPress={deleteSingleLocation}>Confirm</Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal>
-    </Card>
-  );
-}
-
 export default function SingleLocation({location, navigation}: Props) {
   const theme: MD3Theme = useTheme();
-
-  const divideAllTags = (tags: string): string[] => {
-    // @ts-ignore
-    return tags
-      .replaceAll(';', ',')
-      .replaceAll(' ', ',')
-      .split(',')
-      .filter((tag: string) => tag !== '' && tag !== ' ' && tag !== ';');
-  };
 
   const iconSize: number = 35;
 
@@ -222,13 +32,9 @@ export default function SingleLocation({location, navigation}: Props) {
     });
   };
 
-  const chipPressed = (tag: string) => {
-    navigation.navigate('SearchResults', {searchQuery: tag});
-  };
-
   return (
     <View>
-      <Card mode={'outlined'} style={styles.card}>
+      <Card mode={'elevated'} style={styles.card}>
         <Card.Content style={styles.row}>
           <View style={styles.viewImage}>
             <TouchableRipple
@@ -255,24 +61,15 @@ export default function SingleLocation({location, navigation}: Props) {
               onPress={() => {
                 goToDetails();
               }}>
-              <Text variant="titleLarge">{location.title}</Text>
+              <Text variant="titleLarge" style={styles.title}>
+                {location.title}
+              </Text>
             </TouchableRipple>
-
-            <View style={styles.chips}>
-              {location.tags !== '' &&
-                // @ts-ignore
-                divideAllTags(location.tags.toString()).map((tag, index) => {
-                  return (
-                    <Chip
-                      key={index}
-                      compact={true}
-                      icon="information"
-                      onPress={() => chipPressed(tag.toString())}>
-                      {tag}
-                    </Chip>
-                  );
-                })}
-            </View>
+            <ChipTags
+              style={styles.chips}
+              navigation={navigation}
+              tags={location.tags!.toString()}
+            />
             <View style={styles.chips}>
               {location.description !== '' && (
                 <Icon
@@ -374,5 +171,11 @@ const styles = StyleSheet.create({
   viewContent: {
     flex: 8,
     marginLeft: layout.generalMargin,
+  },
+  title: {
+    flexWrap: 'nowrap',
+    overflow: 'hidden',
+    width: '100%',
+    flexDirection: 'row',
   },
 });

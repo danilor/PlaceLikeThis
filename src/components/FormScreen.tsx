@@ -52,7 +52,7 @@ export default function FormScreen({navigation, route, options, back}: Props) {
     parking: false,
   };
 
-  console.log('Route', route.params);
+  // console.log('Route', route.params);
 
   if (
     route.params !== undefined &&
@@ -230,7 +230,7 @@ export default function FormScreen({navigation, route, options, back}: Props) {
       )}
       {permission === 0 && <NoLocationPermissions headerImage={headerImage} />}
       {permission === 1 && (
-        <Card mode={'outlined'} style={styles.card}>
+        <Card mode={'elevated'} style={styles.card}>
 
 
 

@@ -32,10 +32,19 @@ CREATE TABLE IF NOT EXISTS ${dbConfig.tables.places} (
   longitude TEXT NOT NULL,
   created_at date
 );
-
   `;
 
   await db.executeSql(query);
+
+  const query2 = `
+  
+CREATE TABLE IF NOT EXISTS ${dbConfig.tables.settings} (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL
+);
+  `;
+
+  await db.executeSql(query2);
 };
 
 export const initializeDB = async () => {
@@ -126,6 +135,20 @@ export const getPlaces = async (
     console.error(error);
     throw Error('Failed to get Places from database !!!');
   }
+};
+
+
+export const getSettings = async () => {
+  const db = await getDBConnection();
+  const items: any = {};
+  const query = `SELECT * FROM ${dbConfig.tables.settings};`;
+  const results = await db.executeSql(query);
+  results.forEach(result => {
+    for (let index = 0; index < result.rows.length; index++) {
+      items[result.rows.item(index).key] = result.rows.item(index).value;
+    }
+  });
+  return items;
 };
 
 export const deleteLocation = async (id: number) => {

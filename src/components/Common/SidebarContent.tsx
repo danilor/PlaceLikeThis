@@ -25,7 +25,7 @@ export default function SidebarContent({drawer}: Props) {
 
       <Image source={layout.images.bottomHeader} style={styles.bottomHeader} />
 
-      <Drawer.Section title="Menu">
+      <Drawer.Section title="Menu" showDivider={false}>
         <Drawer.Item
           label="Settings"
           icon={'tools'}
@@ -33,10 +33,7 @@ export default function SidebarContent({drawer}: Props) {
           onPress={() => {
             // navigateTo('About');
             // @ts-ignore
-            Alert.alert(
-              'Coming soon',
-              'This feature is not implemented yet. Keep your application updated to see future changes.',
-            );
+            navigateTo('Settings');
           }}
         />
 
@@ -48,11 +45,9 @@ export default function SidebarContent({drawer}: Props) {
             navigateTo('About');
           }}
         />
-      </Drawer.Section>
 
-      <Drawer.Section title="Extras" showDivider={false}>
         <Drawer.Item
-          label="Places Images"
+          label="AI Images"
           icon={'camera-image'}
           active={false}
           onPress={() => {

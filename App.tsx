@@ -17,7 +17,8 @@ import SidebarContent from './src/components/Common/SidebarContent.tsx';
 import PlacesImages from './src/components/PlacesImages.tsx';
 import screenStackConfig from './src/config/screenStack.config.tsx';
 import layout from './src/config/layout.config.tsx';
-import SearchResults from "./src/components/SearchResults.tsx";
+import SearchResults from './src/components/SearchResults.tsx';
+import SettingsScreen from "./src/components/SettingsScreen.tsx";
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -58,8 +59,6 @@ function App() {
   };
 
   // <DrawerNavigator />;
-
-  // @ts-ignore
 
   // @ts-ignore
   return (
@@ -137,6 +136,16 @@ function App() {
                 // @ts-ignore
                 options={{
                   title: 'Places Images',
+                  ...screenStackConfig,
+                }}
+              />
+              <Stack.Screen
+                name="Settings"
+                // @ts-ignore
+                component={SettingsScreen}
+                // @ts-ignore
+                options={{
+                  title: 'Settings',
                   ...screenStackConfig,
                 }}
               />
