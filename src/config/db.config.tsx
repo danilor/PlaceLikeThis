@@ -3,7 +3,7 @@ const db = {
   dbName: 'placeslikethis.db',
   tables: {
     places: 'locations',
-    settings: 'settings',
+    settings: 'storedSettings',
   },
 };
 

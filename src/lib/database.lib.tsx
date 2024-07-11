@@ -5,6 +5,7 @@ import {
 } from 'react-native-sqlite-storage';
 import dbConfig from '../config/db.config.tsx';
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
+import settings from '../config/settigs.config.tsx';
 
 enablePromise(true);
 
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS ${dbConfig.tables.places} (
   const query2 = `
   
 CREATE TABLE IF NOT EXISTS ${dbConfig.tables.settings} (
-  key TEXT PRIMARY KEY,
+  key TEXT TEXT  PRIMARY KEY,
   value TEXT NOT NULL
 );
   `;
@@ -51,7 +52,55 @@ export const initializeDB = async () => {
   // console.log('Initializing DB');
   const db = await getDBConnection();
   await createTable(db);
+
+  // Object.keys(settings.defaultSettings).forEach(async key => {
+  //   // @ts-ignore
+  //   const r = await saveSettings(key, settings.defaultSettings[key].toString(),'IGNORE');
+  // });
+
   return db;
+};
+
+export const deleteSetting = async (key: string) => {
+  const db = await getDBConnection();
+  const deleteQuery = `DELETE from ${dbConfig.tables.settings} where key = '${key}'`;
+  await db.executeSql(deleteQuery);
+  return await getSettings();
+};
+
+export const saveSettings = async (
+  key: string,
+  value: string,
+  type: string = 'REPLACE',
+) => {
+  if (type === 'REPLACE') {
+    await deleteSetting(key);
+  }
+
+  const db = await getDBConnection();
+  // console.log('Saving Settings');
+  const query = `INSERT OR ${type} INTO ${dbConfig.tables.settings} 
+    (
+      key, 
+      value
+      ) 
+    values
+    (
+      '${key}', 
+      '${value}'
+      )
+      `;
+
+  // console.log('Query saved', query);
+
+  // console.log('Query saved');
+  try {
+    db.executeSql(query);
+  } catch (error) {
+    console.error(error);
+  }
+
+  return await getSettings();
 };
 
 export const savePlace = async (place: PlaceInformation) => {
@@ -137,8 +186,8 @@ export const getPlaces = async (
   }
 };
 
-
 export const getSettings = async () => {
+  // console.log('Getting settings');
   const db = await getDBConnection();
   const items: any = {};
   const query = `SELECT * FROM ${dbConfig.tables.settings};`;
@@ -148,6 +197,7 @@ export const getSettings = async () => {
       items[result.rows.item(index).key] = result.rows.item(index).value;
     }
   });
+  // console.log(items);
   return items;
 };
 

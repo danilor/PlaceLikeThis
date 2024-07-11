@@ -1,10 +1,9 @@
-import {Appbar, Button, Menu, Searchbar, Text} from 'react-native-paper';
+import {Appbar, Searchbar} from 'react-native-paper';
 import {getHeaderTitle} from '@react-navigation/elements';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import theme from '../../config/theme.config.tsx';
 import {Image, StyleSheet, View} from 'react-native';
 import layout from '../../config/layout.config.tsx';
-import { DrawerLayout } from "react-native-gesture-handler";
 
 type Props = {
   navigation: any;
@@ -19,13 +18,9 @@ export function TopNavigation_backup({
   route,
   options,
   back,
-  drawer
+  drawer,
 }: Props) {
   const title = getHeaderTitle(options, route.name);
-
-  const [visible, setVisible] = useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
 
   const [searching, setSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -88,36 +83,6 @@ export function TopNavigation_backup({
           }}
         />
       )}
-      {/*<Menu*/}
-      {/*  visible={visible}*/}
-      {/*  onDismiss={closeMenu}*/}
-      {/*  anchor={*/}
-      {/*    <Appbar.Action*/}
-
-      {/*      icon="dots-vertical"*/}
-      {/*      onPress={openMenu}*/}
-      {/*    />*/}
-      {/*  }>*/}
-      {/*  <Menu.Item*/}
-      {/*    onPress={() => {*/}
-      {/*      console.log('Option 1 was pressed');*/}
-      {/*    }}*/}
-      {/*    title="Option 1"*/}
-      {/*  />*/}
-      {/*  <Menu.Item*/}
-      {/*    onPress={() => {*/}
-      {/*      console.log('Option 2 was pressed');*/}
-      {/*    }}*/}
-      {/*    title="Option 2"*/}
-      {/*  />*/}
-      {/*  <Menu.Item*/}
-      {/*    onPress={() => {*/}
-      {/*      console.log('Option 3 was pressed');*/}
-      {/*    }}*/}
-      {/*    title="Option 3"*/}
-      {/*    disabled*/}
-      {/*  />*/}
-      {/*</Menu>*/}
     </Appbar.Header>
   );
 }
@@ -127,7 +92,7 @@ export default function TopNavigation({
   route,
   options,
   back,
-  drawer
+  drawer,
 }: Props) {
   const title = getHeaderTitle(options, route.name);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -168,23 +133,14 @@ export default function TopNavigation({
           />
         )}
 
-        {/*<Appbar.Action
-            icon={'information'}
-            onPress={() => {
-              console.log('Setting open');
-              navigation.navigate('About');
-            }}
-          /> */}
-
         <Appbar.Action
           icon={'dots-vertical'}
           onPress={() => {
-            console.log('Setting open');
+            // console.log('Setting open');
             drawer();
             // navigation.openDrawer();
           }}
         />
-
       </Appbar.Header>
       {searching && (
         <View style={styles.searchArea}>

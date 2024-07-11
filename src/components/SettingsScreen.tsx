@@ -1,8 +1,11 @@
 import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import layout from '../config/layout.config.tsx';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Divider, Icon, Switch, Text} from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useDispatch, useSelector} from 'react-redux';
+import {getSettings, saveSettings} from '../lib/database.lib.tsx';
+import {setSettings} from '../store/reducers/settingsSlice';
 
 type itemProps = {
   label: string;
@@ -31,6 +34,46 @@ export function SettingsScreenItem({
   const [stringValue, setStringValue] = useState('' as string);
   const [open, setOpen] = useState(false);
   const [itemsValues, setItemsValues] = useState(items);
+
+  const settingValue = useSelector((state: any) => state.settings.value[name]);
+
+  // console.log('Setting Value', name, settingValue);
+
+  const dispatch = useDispatch();
+
+
+  const saveSingleSetting = async (value: string) => {
+    const settings = await saveSettings(name, value.toString(), 'REPLACE');
+    dispatch(setSettings(settings));
+  };
+
+  const saveBooleanSetting = async (value: boolean) => {
+    console.log('Saving boolean setting', name, value);
+    setSwitchValue(value);
+    await saveSingleSetting(value.toString());
+  };
+
+  const saveStringSetting = async (value: string) => {
+    console.log('Saving string setting', name, value);
+    setStringValue(value);
+    await saveSingleSetting(value);
+  };
+
+  useEffect(() => {
+    if (
+      settingValue !== undefined &&
+      settingValue !== null &&
+      settingValue !== ''
+    ) {
+      if (type === 'switch') {
+        setSwitchValue(settingValue === 'true');
+        console.log('Switch Value', switchValue);
+      } else {
+        setStringValue(settingValue);
+        console.log('String Value', stringValue);
+      }
+    }
+  }, []);
 
   const style = StyleSheet.create({
     single: {
@@ -84,7 +127,7 @@ export function SettingsScreenItem({
             <Switch
               value={switchValue}
               onValueChange={v => {
-                setSwitchValue(v);
+                const r = saveBooleanSetting(v);
               }}
             />
           )}
@@ -99,6 +142,9 @@ export function SettingsScreenItem({
               setOpen={setOpen}
               setValue={setStringValue}
               setItems={setItemsValues}
+              onChangeValue={(value: any) => {
+                const r = saveStringSetting(value);
+              }}
               placeholder={'Select'}
               zIndex={zIndex}
               zIndexInverse={zIndexInverse}
@@ -196,9 +242,9 @@ export default function SettingsScreen({navigation}) {
               name={'resolution'}
               type={'select'}
               items={[
-                {label: '500x500', value: 500},
-                {label: '1000x1000', value: 1000},
-                {label: '1500x1500', value: 1500},
+                {label: '500x500', value: '500'},
+                {label: '1000x1000', value: '1000'},
+                {label: '1500x1500', value: '1500'},
               ]}
               zIndex={2000}
               zIndexInverse={1000}
@@ -210,9 +256,9 @@ export default function SettingsScreen({navigation}) {
               name={'quality'}
               type={'select'}
               items={[
-                {label: 'Low', value: 0.5},
-                {label: 'Medium', value: 0.8},
-                {label: 'High', value: 1},
+                {label: 'Low', value: '0.5'},
+                {label: 'Medium', value: '0.8'},
+                {label: 'High', value: '1'},
               ]}
               zIndex={1000}
               zIndexInverse={2000}

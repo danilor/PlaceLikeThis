@@ -7,9 +7,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TopNavigation from './src/components/Common/TopNavigation.tsx';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import FormScreen from './src/components/FormScreen.tsx';
-import {initializeDB} from './src/lib/database.lib.tsx';
+import {getSettings, initializeDB} from './src/lib/database.lib.tsx';
 import store from './src/store/store';
-import {Provider} from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 import About from './src/components/About.tsx';
 import PlaceDetails from './src/components/PlaceDetails.tsx';
 import {Drawer} from 'react-native-drawer-layout';
@@ -18,23 +18,37 @@ import PlacesImages from './src/components/PlacesImages.tsx';
 import screenStackConfig from './src/config/screenStack.config.tsx';
 import layout from './src/config/layout.config.tsx';
 import SearchResults from './src/components/SearchResults.tsx';
-import SettingsScreen from "./src/components/SettingsScreen.tsx";
+import SettingsScreen from './src/components/SettingsScreen.tsx';
+import {setSettings} from './src/store/reducers/settingsSlice';
 
+/**
+ * Main Application Component
+ * @constructor
+ */
 function App() {
   const Stack = createNativeStackNavigator();
   // const Drawer = createDrawerNavigator();
   const [loaded, setLoaded] = useState(false);
 
+  /**
+   * Controls the drawer state
+   */
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  /**
-   * Here we should have the process of DB creation in case it is not created yet
-   */
+  const dispatch = store.dispatch;
 
+  /**
+   * Here we should have the process of DB creation in case it is not created yet.
+   * This should also read the settings and send them to the store.
+   */
   const loadDataCallback = useCallback(async () => {
     try {
+      console.log('Loading local db');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const db = await initializeDB();
+      const settings = await getSettings();
+      // console.log('Settings', settings);
+      dispatch(setSettings(settings));
       setLoaded(true);
     } catch (error) {
       console.error(error);
@@ -52,7 +66,7 @@ function App() {
 
   const changeDrawerState = () => {
     // setDrawerOpen(!drawerOpen);
-    console.log('Change drawer');
+    // console.log('Change drawer');
     setDrawerOpen(prevOpen => !prevOpen);
     // @ts-ignore
     // drawerLayourReference.current.openDrawer();

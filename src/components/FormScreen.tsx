@@ -20,9 +20,13 @@ import Mapped from './Common/Mapped.tsx';
 import messages from '../config/messages.config.tsx';
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
 import {savePlace} from '../lib/database.lib.tsx';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {increment} from '../store/reducers/counterSlice';
-import {ImagePickerResponse, launchCamera} from 'react-native-image-picker';
+import {
+  CameraOptions,
+  ImagePickerResponse,
+  launchCamera,
+} from 'react-native-image-picker';
 import cameraConfig from '../config/camera.config.tsx';
 import NoLocationPermissions from './Form/NoLocationPermissions.tsx';
 import Base64Image from './Common/Base64Image.tsx';
@@ -51,6 +55,11 @@ export default function FormScreen({navigation, route, options, back}: Props) {
     photo: '',
     parking: false,
   };
+
+  /**
+   * Settings
+   */
+  const setting = useSelector((state: any) => state.settings.value);
 
   // console.log('Route', route.params);
 
@@ -85,11 +94,8 @@ export default function FormScreen({navigation, route, options, back}: Props) {
    */
 
   const [permission, setPermission] = useState(initialPermission);
-
   const [snackBarCameraVisible, setSnackBarCameraVisible] = useState(false);
-
   const onToggleSnackBarCamera = () => setSnackBarCameraVisible(!visible);
-
   const onDismissSnackBarCamera = () => setSnackBarCameraVisible(false);
 
   /**
@@ -166,6 +172,24 @@ export default function FormScreen({navigation, route, options, back}: Props) {
    * https://github.com/react-native-image-picker/react-native-image-picker?tab=readme-ov-file
    */
   const addAPhoto = () => {
+    const config: CameraOptions = cameraConfig;
+    if (setting.quality !== undefined) {
+      console.log('Quality', setting.quality);
+      // @ts-ignore
+      config.quality = parseFloat(setting.quality);
+    }
+    if (setting.resolution !== undefined) {
+      console.log('Resolution', setting.resolution);
+      // @ts-ignore
+      config.maxHeight = parseInt(setting.resolution, 10);
+      config.maxWidth = parseInt(setting.resolution, 10);
+    }
+    if (setting.saveGallery !== undefined) {
+      console.log('Save to Gallery', setting.saveGallery);
+      // @ts-ignore
+      config.saveToPhotos = (setting.saveGallery.toLowerCase() === 'true');
+    }
+
     const r = launchCamera(cameraConfig, (response: ImagePickerResponse) => {
       // console.log('Response = ', response);
       if (response.didCancel) {
@@ -231,13 +255,9 @@ export default function FormScreen({navigation, route, options, back}: Props) {
       {permission === 0 && <NoLocationPermissions headerImage={headerImage} />}
       {permission === 1 && (
         <Card mode={'elevated'} style={styles.card}>
-
-
-
-          {!showMap &&
-            formInformation.photo === '' && (
-              <Card.Cover source={headerImage} />
-            )}
+          {!showMap && formInformation.photo === '' && (
+            <Card.Cover source={headerImage} />
+          )}
 
           {!showMap &&
             formInformation.photo !== null &&
