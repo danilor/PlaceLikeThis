@@ -250,7 +250,10 @@ export default function FormScreen({navigation, route, options, back}: Props) {
   return (
     <ScrollView style={layout.styles.generalContainer}>
       {permission === -1 && (
-        <ActivityIndicator size={'large'} animating={true} />
+        <View style={styles.centered}>
+          <ActivityIndicator size={'large'} animating={true} />
+          <Text>Getting your location</Text>
+        </View>
       )}
       {permission === 0 && <NoLocationPermissions headerImage={headerImage} />}
       {permission === 1 && (

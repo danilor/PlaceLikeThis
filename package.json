@@ -10,6 +10,7 @@
     "start": "react-native start --reset-cache",
     "test": "jest",
     "build_release": "npx react-native build-android --mode=release",
+    "build_release_ios": "npx react-native build-ios --mode=release",
     "build": "npx react-native build-android"
   },
   "dependencies": {

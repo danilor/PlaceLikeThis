@@ -5,11 +5,11 @@ import theme from './src/config/theme.config.tsx';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import TopNavigation from './src/components/Common/TopNavigation.tsx';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import FormScreen from './src/components/FormScreen.tsx';
 import {getSettings, initializeDB} from './src/lib/database.lib.tsx';
 import store from './src/store/store';
-import {Provider, useDispatch} from 'react-redux';
+import {Provider} from 'react-redux';
 import About from './src/components/About.tsx';
 import PlaceDetails from './src/components/PlaceDetails.tsx';
 import {Drawer} from 'react-native-drawer-layout';
@@ -20,6 +20,7 @@ import layout from './src/config/layout.config.tsx';
 import SearchResults from './src/components/SearchResults.tsx';
 import SettingsScreen from './src/components/SettingsScreen.tsx';
 import {setSettings} from './src/store/reducers/settingsSlice';
+import FullLoading from './src/components/Common/FullLoading.tsx';
 
 /**
  * Main Application Component
@@ -27,7 +28,11 @@ import {setSettings} from './src/store/reducers/settingsSlice';
  */
 function App() {
   const Stack = createNativeStackNavigator();
-  // const Drawer = createDrawerNavigator();
+
+  /**
+   * This indicates if the application has been loaded. This includes
+   * the database and the settings.
+   */
   const [loaded, setLoaded] = useState(false);
 
   /**
@@ -35,6 +40,11 @@ function App() {
    */
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  /**
+   * Here wa cannot use useDispatch(), but
+   * it seems like we can use the store.dispatch directly as an
+   * object.
+   */
   const dispatch = store.dispatch;
 
   /**
@@ -61,20 +71,15 @@ function App() {
 
   /********************************************************************************************/
   if (!loaded) {
-    return null;
+    return <FullLoading />;
   }
 
   const changeDrawerState = () => {
-    // setDrawerOpen(!drawerOpen);
-    // console.log('Change drawer');
     setDrawerOpen(prevOpen => !prevOpen);
-    // @ts-ignore
-    // drawerLayourReference.current.openDrawer();
   };
 
-  // <DrawerNavigator />;
 
-  // @ts-ignore
+
   return (
     <PaperProvider theme={theme}>
       <Provider store={store}>
@@ -103,6 +108,8 @@ function App() {
                 component={Main}
                 // @ts-ignore
                 options={{title: 'Place Like This', ...screenStackConfig}}
+                animationForReplace={'pop'}
+                animation={'default'}
               />
 
               <Stack.Screen

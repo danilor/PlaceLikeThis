@@ -42,7 +42,7 @@ let layout = {
       box: require('../assets/img/icons/box.png'),
       facebook: require('../assets/img/icons/facebook.png'),
     },
-    settingIcons:{
+    settingIcons: {
       about: require('../assets/img/icons/settings/about.png'),
       airplane: require('../assets/img/icons/settings/airplane.png'),
       apps: require('../assets/img/icons/settings/apps.png'),
@@ -63,7 +63,7 @@ let layout = {
       storage: require('../assets/img/icons/settings/storage.png'),
       user: require('../assets/img/icons/settings/user.png'),
       wifi: require('../assets/img/icons/settings/wifi.png'),
-    }
+    },
   },
   colors: {
     eva02Red: '#ed2323',

@@ -1,7 +1,7 @@
 const options = {
   presentation: 'modal',
   animationTypeForReplace: 'push',
-  animation: 'slide_from_bottom',
+  animation: 'default',
   headerShown: true,
   cardShadowEnabled: true,
   gestureEnabled: false,

@@ -25,11 +25,16 @@ export function TopNavigation_backup({
   const [searching, setSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+
   const inTheme = JSON.parse(JSON.stringify(theme));
   // @ts-ignore
-  inTheme.colors.elevation.level2 = layout.colors.eva02Red;
-  inTheme.colors.onSurface = layout.colors.justWhite;
-  inTheme.colors.onSurfaceVariant = layout.colors.justWhite;
+  // inTheme.colors.elevation.level2 = layout.colors.eva02Red;
+  // inTheme.colors.onSurface = layout.colors.justWhite;
+  // inTheme.colors.onSurfaceVariant = layout.colors.justWhite;
+
+  inTheme.colors.elevation.level2 = inTheme.colors.primary;
+  inTheme.colors.onSurface = inTheme.colors.onPrimary;
+  inTheme.colors.onSurfaceVariant = inTheme.colors.onPrimary;
 
   return (
     <Appbar.Header

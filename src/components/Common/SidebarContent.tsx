@@ -1,5 +1,5 @@
 import {Alert, Image, StyleSheet, View} from 'react-native';
-import {Drawer} from 'react-native-paper';
+import { Drawer, useTheme } from "react-native-paper";
 import layout from '../../config/layout.config.tsx';
 import {useNavigation} from '@react-navigation/native';
 
@@ -9,6 +9,27 @@ type Props = {
 
 export default function SidebarContent({drawer}: Props) {
   // const [active, setActive] = useState('');
+
+  const theme = useTheme();
+  const styles = StyleSheet.create({
+    logoSpace: {
+      height: 100,
+      backgroundColor: layout.colors.eva02Red,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    logo: {
+      width: '30%',
+      height: undefined,
+      aspectRatio: 1,
+    },
+
+    bottomHeader: {
+      height: undefined,
+      width: '100%',
+      aspectRatio: 500 / 87,
+    },
+  });
 
   const navigation = useNavigation();
 
@@ -59,22 +80,4 @@ export default function SidebarContent({drawer}: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  logoSpace: {
-    height: 100,
-    backgroundColor: layout.colors.eva02Red,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: '30%',
-    height: undefined,
-    aspectRatio: 1,
-  },
 
-  bottomHeader: {
-    height: undefined,
-    width: '100%',
-    aspectRatio: 500 / 87,
-  },
-});
