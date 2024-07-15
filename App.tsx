@@ -21,6 +21,7 @@ import SearchResults from './src/components/SearchResults.tsx';
 import SettingsScreen from './src/components/SettingsScreen.tsx';
 import {setSettings} from './src/store/reducers/settingsSlice';
 import FullLoading from './src/components/Common/FullLoading.tsx';
+import SettingsScreenExport from "./src/components/SettingsScreenExport.tsx";
 
 /**
  * Main Application Component
@@ -149,6 +150,7 @@ function App() {
                   title: 'About',
                   ...screenStackConfig,
                 }}
+                initialParams={{sidebar: false}}
               />
               <Stack.Screen
                 name="Places"
@@ -159,6 +161,7 @@ function App() {
                   title: 'Places Images',
                   ...screenStackConfig,
                 }}
+                initialParams={{sidebar: false}}
               />
               <Stack.Screen
                 name="Settings"
@@ -169,6 +172,18 @@ function App() {
                   title: 'Settings',
                   ...screenStackConfig,
                 }}
+                initialParams={{sidebar: false}}
+              />
+              <Stack.Screen
+                name="SettingsExport"
+                // @ts-ignore
+                component={SettingsScreenExport}
+                // @ts-ignore
+                options={{
+                  title: 'Settings > Export',
+                  ...screenStackConfig,
+                }}
+                initialParams={{sidebar: false}}
               />
             </Stack.Navigator>
           </Drawer>

@@ -1,17 +1,9 @@
-import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import layout from '../config/layout.config.tsx';
-import React, {useEffect, useState} from 'react';
-import {Divider, Icon, Switch, Text} from 'react-native-paper';
-import DropDownPicker from 'react-native-dropdown-picker';
-import {useDispatch, useSelector} from 'react-redux';
-import {getSettings, saveSettings} from '../lib/database.lib.tsx';
-import {setSettings} from '../store/reducers/settingsSlice';
-import { SettingScreenBlock } from './settings/SettingScreenBlock.tsx';
-import { SettingsScreenItem } from './settings/SettingsScreenItem.tsx';
+import React from 'react';
 
-
-
-
+import {SettingScreenBlock} from './settings/SettingScreenBlock.tsx';
+import {SettingsScreenItem} from './settings/SettingsScreenItem.tsx';
 
 // @ts-ignore
 export default function SettingsScreen({navigation}) {
@@ -26,10 +18,7 @@ export default function SettingsScreen({navigation}) {
     <View style={{...layout.styles.generalContainer}}>
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <SettingScreenBlock
-            navigation={navigation}
-            title="Camera"
-            icon={'camera'}>
+          <SettingScreenBlock navigation={navigation} title="" icon={''}>
             <SettingsScreenItem
               icon={'image-size-select-large'}
               label={'Resolution'}
@@ -69,10 +58,7 @@ export default function SettingsScreen({navigation}) {
             />
           </SettingScreenBlock>
 
-          <SettingScreenBlock
-            navigation={navigation}
-            title="Location"
-            icon={'map'}>
+          <SettingScreenBlock navigation={navigation} title="" icon={''}>
             <SettingsScreenItem
               icon={'map-marker'}
               label={'Use Precise Location'}
@@ -80,12 +66,17 @@ export default function SettingsScreen({navigation}) {
               type={'switch'}
               divider={false}
             />
+            <SettingsScreenItem
+              icon={'export-variant'}
+              label={'Export Data'}
+              name={'exportdata'}
+              type={'link'}
+              target={'SettingsExport'}
+              divider={false}
+            />
           </SettingScreenBlock>
 
-          <SettingScreenBlock
-            navigation={navigation}
-            title="Software Information"
-            icon={'information'}>
+          <SettingScreenBlock navigation={navigation} title="" icon={''}>
             <SettingsScreenItem
               icon={'identifier'}
               label={'Version'}

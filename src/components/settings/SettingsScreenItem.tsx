@@ -5,7 +5,8 @@ import {setSettings} from '../../store/reducers/settingsSlice';
 import {StyleSheet, View} from 'react-native';
 import layout from '../../config/layout.config.tsx';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {Divider, Icon, Switch, Text} from 'react-native-paper';
+import {Divider, Icon, IconButton, Switch, Text} from 'react-native-paper';
+import {useNavigation} from '@react-navigation/native';
 
 type itemProps = {
   label: string;
@@ -17,6 +18,7 @@ type itemProps = {
   items?: any[];
   zIndex?: number;
   zIndexInverse?: number;
+  target?: string;
 };
 
 export function SettingsScreenItem({
@@ -29,6 +31,7 @@ export function SettingsScreenItem({
   items = [],
   zIndex = 0,
   zIndexInverse = 0,
+  target = '',
 }: itemProps) {
   const [switchValue, setSwitchValue] = useState(false as boolean);
   const [stringValue, setStringValue] = useState('' as string);
@@ -36,6 +39,8 @@ export function SettingsScreenItem({
   const [itemsValues, setItemsValues] = useState(items);
 
   const settingValue = useSelector((state: any) => state.settings.value[name]);
+
+  const navigation = useNavigation();
 
   // console.log('Setting Value', name, settingValue);
 
@@ -110,13 +115,15 @@ export function SettingsScreenItem({
     },
   });
 
+  const iconSize: number = 32;
+
   DropDownPicker.setListMode('SCROLLVIEW');
 
   return (
     <View>
       <View style={style.single}>
         <View style={style.icon}>
-          <Icon size={32} source={icon !== '' ? icon : 'tools'} />
+          <Icon size={iconSize} source={icon !== '' ? icon : 'tools'} />
         </View>
         <View style={style.label}>
           <Text variant={'bodyLarge'}>{label}</Text>
@@ -147,6 +154,17 @@ export function SettingsScreenItem({
               placeholder={'Select'}
               zIndex={zIndex}
               zIndexInverse={zIndexInverse}
+            />
+          )}
+
+          {type === 'link' && (
+            <IconButton
+              size={iconSize}
+              icon={'arrow-right-drop-circle'}
+              onPress={() => {
+                // @ts-ignore
+                navigation.navigate(target.toString());
+              }}
             />
           )}
         </View>

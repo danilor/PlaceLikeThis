@@ -14,5 +14,7 @@ const messages = {
   noLocationTitle: 'Error getting location',
   noLocationPermission:
     'To use this form and save new locations, please enable location to access for this application and reload this application.',
+  errorExporting:
+  'There was an error exporting the data. Please try again.',
 };
 export default messages;

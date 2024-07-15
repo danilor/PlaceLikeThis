@@ -25,8 +25,8 @@ export function TopNavigation_backup({
   const [searching, setSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-
   const inTheme = JSON.parse(JSON.stringify(theme));
+
   // @ts-ignore
   // inTheme.colors.elevation.level2 = layout.colors.eva02Red;
   // inTheme.colors.onSurface = layout.colors.justWhite;
@@ -103,6 +103,13 @@ export default function TopNavigation({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [searching, setSearching] = React.useState(false);
 
+  console.log('Route Options', route.params);
+
+  const sidebar =
+    route.params !== undefined && route.params.sidebar !== undefined
+      ? route.params.sidebar
+      : true;
+
   const inTheme = JSON.parse(JSON.stringify(theme));
   // @ts-ignore
   inTheme.colors.elevation.level2 = layout.colors.eva02Red;
@@ -138,14 +145,16 @@ export default function TopNavigation({
           />
         )}
 
-        <Appbar.Action
-          icon={'dots-vertical'}
-          onPress={() => {
-            // console.log('Setting open');
-            drawer();
-            // navigation.openDrawer();
-          }}
-        />
+        {sidebar && (
+          <Appbar.Action
+            icon={'dots-vertical'}
+            onPress={() => {
+              // console.log('Setting open');
+              drawer();
+              // navigation.openDrawer();
+            }}
+          />
+        )}
       </Appbar.Header>
       {searching && (
         <View style={styles.searchArea}>
