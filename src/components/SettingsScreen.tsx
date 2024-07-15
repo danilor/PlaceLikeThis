@@ -67,11 +67,19 @@ export default function SettingsScreen({navigation}) {
               divider={false}
             />
             <SettingsScreenItem
-              icon={'export-variant'}
+              icon={'export'}
               label={'Export Data'}
               name={'exportdata'}
               type={'link'}
               target={'SettingsExport'}
+              divider={false}
+            />
+            <SettingsScreenItem
+              icon={'import'}
+              label={'Import Data'}
+              name={'importdata'}
+              type={'none'}
+              target={'SettingsImport'}
               divider={false}
             />
           </SettingScreenBlock>
