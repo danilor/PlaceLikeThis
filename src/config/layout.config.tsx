@@ -121,5 +121,7 @@ let layout = {
     houses: 806 / 461,
     logo: 437 / 307,
   },
+
+  exportImportButtonSize: 60,
 };
 export default layout;

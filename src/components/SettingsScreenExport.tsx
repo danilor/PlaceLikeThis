@@ -43,7 +43,7 @@ export default function SettingsScreenExport({navigation}) {
 
         var path = RNFS.DownloadDirectoryPath + '/' + files.defaultExportName;
 
-        RNFS.writeFile(path, data, 'utf8')
+        RNFS.writeFile(path, data, files.fileFormat)
           .then((success: any) => {
             console.log('FILE WRITTEN!', success, path);
             share({
@@ -94,14 +94,20 @@ export default function SettingsScreenExport({navigation}) {
                   into the application whenever needed.
                 </Text>
                 <Text style={styles.text}>
+                  <Text style={{fontWeight: 'bold'}}>Note:</Text> This file is
+                  stored in JSON format and can be shared with other users of
+                  the application. The higher the resolution of the images
+                  stored, the larger the file size will be.
+                </Text>
+                <Text style={styles.text}>
                   To begin, click the "Export" button below. Please note that
                   this process may take several minutes, depending on the volume
                   of data being exported.
                 </Text>
                 <View style={styles.buttonSpace}>
                   <IconButton
-                    icon="export-variant"
-                    size={60}
+                    icon="export"
+                    size={layout.exportImportButtonSize}
                     mode={'contained'}
                     onPress={exportData}
                   />

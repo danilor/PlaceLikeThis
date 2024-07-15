@@ -105,7 +105,7 @@ export const saveSettings = async (
 
 export const savePlace = async (place: PlaceInformation) => {
   const db = await getDBConnection();
-  // console.log('Saving Place');
+  console.log('Saving Place');
 
   let query: string = '';
 

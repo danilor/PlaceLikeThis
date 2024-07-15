@@ -4,6 +4,7 @@ import React from 'react';
 
 import {SettingScreenBlock} from './settings/SettingScreenBlock.tsx';
 import {SettingsScreenItem} from './settings/SettingsScreenItem.tsx';
+import globalSettings from "../config/global.config.tsx";
 
 // @ts-ignore
 export default function SettingsScreen({navigation}) {
@@ -56,9 +57,6 @@ export default function SettingsScreen({navigation}) {
               type={'switch'}
               divider={false}
             />
-          </SettingScreenBlock>
-
-          <SettingScreenBlock navigation={navigation} title="" icon={''}>
             <SettingsScreenItem
               icon={'map-marker'}
               label={'Use Precise Location'}
@@ -66,6 +64,10 @@ export default function SettingsScreen({navigation}) {
               type={'switch'}
               divider={false}
             />
+          </SettingScreenBlock>
+
+          <SettingScreenBlock navigation={navigation} title="" icon={''}>
+
             <SettingsScreenItem
               icon={'export'}
               label={'Export Data'}
@@ -78,7 +80,7 @@ export default function SettingsScreen({navigation}) {
               icon={'import'}
               label={'Import Data'}
               name={'importdata'}
-              type={'none'}
+              type={'link'}
               target={'SettingsImport'}
               divider={false}
             />
@@ -91,7 +93,7 @@ export default function SettingsScreen({navigation}) {
               name={'version'}
               type={'info'}
               divider={false}
-              info={'1.0.0'}
+              info={globalSettings.version}
             />
 
             <SettingsScreenItem
@@ -100,7 +102,7 @@ export default function SettingsScreen({navigation}) {
               name={'react'}
               type={'info'}
               divider={false}
-              info={'18.2.0'}
+              info={globalSettings.reactVersion}
             />
 
             <SettingsScreenItem
@@ -109,7 +111,7 @@ export default function SettingsScreen({navigation}) {
               name={'react-native'}
               type={'info'}
               divider={false}
-              info={'0.74.2'}
+              info={globalSettings.reactNativeVersion}
             />
 
             <SettingsScreenItem
@@ -118,7 +120,7 @@ export default function SettingsScreen({navigation}) {
               name={'node'}
               type={'info'}
               divider={false}
-              info={'22.3.0'}
+              info={globalSettings.nodeVersion}
             />
           </SettingScreenBlock>
         </ScrollView>

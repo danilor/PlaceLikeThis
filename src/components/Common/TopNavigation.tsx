@@ -103,7 +103,7 @@ export default function TopNavigation({
   const [searchQuery, setSearchQuery] = React.useState('');
   const [searching, setSearching] = React.useState(false);
 
-  console.log('Route Options', route.params);
+  // console.log('Route Options', route.params);
 
   const sidebar =
     route.params !== undefined && route.params.sidebar !== undefined

@@ -22,6 +22,7 @@ import SettingsScreen from './src/components/SettingsScreen.tsx';
 import {setSettings} from './src/store/reducers/settingsSlice';
 import FullLoading from './src/components/Common/FullLoading.tsx';
 import SettingsScreenExport from "./src/components/SettingsScreenExport.tsx";
+import SettingsScreenImport from "./src/components/SettingsScreenImport.tsx";
 
 /**
  * Main Application Component
@@ -181,6 +182,17 @@ function App() {
                 // @ts-ignore
                 options={{
                   title: 'Settings > Export',
+                  ...screenStackConfig,
+                }}
+                initialParams={{sidebar: false}}
+              />
+              <Stack.Screen
+                name="SettingsImport"
+                // @ts-ignore
+                component={SettingsScreenImport}
+                // @ts-ignore
+                options={{
+                  title: 'Settings > Import',
                   ...screenStackConfig,
                 }}
                 initialParams={{sidebar: false}}

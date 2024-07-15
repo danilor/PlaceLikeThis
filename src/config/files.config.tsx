@@ -1,6 +1,8 @@
 const files = {
-  defaultExportName: 'places.pl',
+  defaultExportName: 'data.places',
   fileProtocol: 'file://',
+  mimeType: 'application/octet-stream',
+  fileFormat: 'utf8',
 };
 
 export default files;

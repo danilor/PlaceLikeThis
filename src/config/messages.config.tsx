@@ -16,5 +16,8 @@ const messages = {
     'To use this form and save new locations, please enable location to access for this application and reload this application.',
   errorExporting:
   'There was an error exporting the data. Please try again.',
+  errorImporting:
+    'There was an error importing the data. Please check the file you are trying to import and try again.',
+  successImporting: 'Data imported successfully',
 };
 export default messages;

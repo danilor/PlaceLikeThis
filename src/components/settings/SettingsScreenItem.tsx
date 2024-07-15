@@ -33,6 +33,9 @@ export function SettingsScreenItem({
   zIndexInverse = 0,
   target = '',
 }: itemProps) {
+
+
+
   const [switchValue, setSwitchValue] = useState(false as boolean);
   const [stringValue, setStringValue] = useState('' as string);
   const [open, setOpen] = useState(false);
@@ -84,11 +87,12 @@ export function SettingsScreenItem({
       width: '100%',
       // backgroundColor: 'red',
       flexDirection: 'row',
-      gap: 5,
+      // gap: 5,
       justifyContent: 'space-between',
       alignItems: 'center',
       marginTop: layout.generalMargin,
       marginBottom: layout.generalMargin,
+      height: 50,
     },
     icon: {
       flex: 2,
@@ -105,6 +109,7 @@ export function SettingsScreenItem({
       justifyContent: 'center',
       alignItems: 'flex-end',
       flex: 6,
+
       paddingRight: layout.generalMargin,
     },
     divider: {
@@ -115,7 +120,7 @@ export function SettingsScreenItem({
     },
   });
 
-  const iconSize: number = 32;
+  const iconSize: number = 30;
 
   DropDownPicker.setListMode('SCROLLVIEW');
 
