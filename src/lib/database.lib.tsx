@@ -5,7 +5,7 @@ import {
 } from 'react-native-sqlite-storage';
 import dbConfig from '../config/db.config.tsx';
 import PlaceInformation from '../Models/PlaceInformation.model.tsx';
-import settings from "../config/settigs.config.tsx";
+import settings from '../config/settigs.config.tsx';
 
 enablePromise(true);
 
@@ -55,7 +55,12 @@ export const initializeDB = async () => {
 
   Object.keys(settings.defaultSettings).forEach(async key => {
     // @ts-ignore
-    const r = await saveSettings(key, settings.defaultSettings[key].toString(),'IGNORE');
+    await saveSettings(
+      key,
+      // @ts-ignore
+      settings.defaultSettings[key].toString(),
+      'IGNORE',
+    );
   });
 
   return db;
@@ -150,20 +155,31 @@ export const savePlace = async (place: PlaceInformation) => {
       )
       `;
   }
+  try {
+    await db.executeSql(query);
+  } catch (error) {
+    console.error(error);
+    throw Error('Failed to save Place to database');
+  }
 
   // console.log('Query saved');
-  return db.executeSql(query);
+  return true;
+};
+
+type getPlaceType = {
+  id?: number;
+  search?: string;
 };
 
 export const getPlaces = async (
-  search: string = '',
+  {id, search}: getPlaceType = {id: undefined, search: ''},
 ): Promise<PlaceInformation[]> => {
   // console.log('Getting all places');
   try {
     const db = await getDBConnection();
     const items: PlaceInformation[] = [];
     let query = `SELECT * FROM ${dbConfig.tables.places} ORDER BY id DESC;`;
-    if (search !== '') {
+    if (search !== '' && search !== undefined) {
       console.log('Querying with search', search);
       query = `SELECT 
                     * FROM ${dbConfig.tables.places} 
@@ -171,6 +187,9 @@ export const getPlaces = async (
                     OR tags LIKE '%${search}%' 
                     OR description LIKE '%${search}%' 
                 ORDER BY id DESC;`;
+    }
+    if (id !== undefined) {
+      query = `SELECT * FROM ${dbConfig.tables.places} WHERE id = ${id};`;
     }
     const results = await db.executeSql(query);
     results.forEach(result => {

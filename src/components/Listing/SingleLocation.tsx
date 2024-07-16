@@ -34,6 +34,7 @@ export default function SingleLocation({location, navigation}: Props) {
 
   return (
     <View>
+
       <Card mode={'elevated'} style={styles.card}>
         <Card.Content style={styles.row}>
           <View style={styles.viewImage}>
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'pink',
     // marginHorizontal: 20,
   },
+
   chips: {
     flexDirection: 'row',
     flexWrap: 'nowrap',

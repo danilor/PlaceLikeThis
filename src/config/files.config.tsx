@@ -1,7 +1,11 @@
+const extension = '.json';
+
 const files = {
-  defaultExportName: 'data.places',
+  extension: extension,
+  defaultExportName: 'allPlacesLikeThis' + extension,
   fileProtocol: 'file://',
-  mimeType: 'application/octet-stream',
+  // mimeType: 'application/octet-stream',
+  mimeType: 'application/json',
   fileFormat: 'utf8',
 };
 

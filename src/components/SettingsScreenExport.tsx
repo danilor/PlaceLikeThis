@@ -2,65 +2,30 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import layout from '../config/layout.config.tsx';
 import React from 'react';
 import {Card, IconButton, Snackbar, Text} from 'react-native-paper';
-import {getPlaces} from '../lib/database.lib.tsx';
-import PlaceInformation from '../Models/PlaceInformation.model.tsx';
 import messages from '../config/messages.config.tsx';
-import files from '../config/files.config.tsx';
-import Share from 'react-native-share';
+import {exportPlaces} from '../lib/util.lib.tsx';
 
 // @ts-ignore
-export default function SettingsScreenExport({navigation}) {
+export default function SettingsScreenExport() {
   const [visible, setVisible] = React.useState(false);
+
+  const [exporting, setExporting] = React.useState(false);
 
   const onToggleSnackBar = () => setVisible(!visible);
 
   const onDismissSnackBar = () => setVisible(false);
 
-  const share = async (customOptions: any) => {
-    console.log('Sharing...', customOptions);
-    try {
-      await Share.open(customOptions);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const exportData = () => {
     console.log('Exporting data...');
-    getPlaces()
-      .then((places: PlaceInformation[]) => {
-        console.log('Places:', places.length);
-        // @ts-ignore
-        const data: string = JSON.stringify(
-          places.map((place: PlaceInformation) => {
-            delete place.id;
-            return place;
-          }),
-        );
-        // @ts-ignore
-
-        var RNFS = require('react-native-fs');
-
-        var path = RNFS.DownloadDirectoryPath + '/' + files.defaultExportName;
-
-        RNFS.writeFile(path, data, files.fileFormat)
-          .then((success: any) => {
-            console.log('FILE WRITTEN!', success, path);
-            share({
-              title: 'Place Like This',
-              message: 'Place Like This data file',
-              url: files.fileProtocol + path,
-              type: 'application/json',
-              showAppsToView: true,
-            });
-          })
-          .catch((err: Error) => {
-            console.log(err.message);
-          });
+    setExporting(true);
+    exportPlaces()
+      .then(() => {
+        console.log('Exported');
+        setExporting(false);
       })
-      .catch((error: Error) => {
+      .catch(() => {
         onToggleSnackBar();
-        console.error('Error exporting data:', error);
+        setExporting(false);
       });
   };
 
@@ -110,6 +75,7 @@ export default function SettingsScreenExport({navigation}) {
                     size={layout.exportImportButtonSize}
                     mode={'contained'}
                     onPress={exportData}
+                    loading={exporting}
                   />
                 </View>
               </Card.Content>

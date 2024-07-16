@@ -9,12 +9,14 @@ import picker from 'react-native-document-picker';
 import files from '../config/files.config.tsx';
 import PlaceInformationModel from '../Models/PlaceInformation.model.tsx';
 import {savePlace} from '../lib/database.lib.tsx';
-import { useDispatch } from "react-redux";
-import { increment } from "../store/reducers/counterSlice";
+import {useDispatch} from 'react-redux';
+import {increment} from '../store/reducers/counterSlice';
 
 // @ts-ignore
 export default function SettingsScreenImport({navigation}) {
   const [visible, setVisible] = React.useState(false);
+
+  const [importing, setImporting] = React.useState(false);
 
   const onToggleSnackBar = () => setVisible(!visible);
 
@@ -30,6 +32,7 @@ export default function SettingsScreenImport({navigation}) {
 
   const pickDocument = async () => {
     console.log('Picking document...');
+    setImporting(true);
     picker
       .pickSingle({
         allowMultiSelection: false,
@@ -38,23 +41,34 @@ export default function SettingsScreenImport({navigation}) {
       .then((res: any) => {
         // console.log('Document selected:', res);
         RNFS.readFile(res.uri, files.fileFormat)
-          .then(res => {
-            console.log(res);
-            const d: PlaceInformationModel[] = JSON.parse(res);
-            // console.log(d);
-            d.forEach(async (place: PlaceInformationModel) => {
-              await savePlace(place);
-            });
-            // onToggleSnackBarSuccess();
-            dispatch(increment());
-            navigation.popToTop();
+          .then(async res => {
+            // console.log(res);
+            try {
+              const d: PlaceInformationModel[] = JSON.parse(res);
+              // console.log(d);
+              for (let i = 0; i < d.length; i++) {
+                await savePlace(d[i]);
+              }
+              // onToggleSnackBarSuccess();
+              dispatch(increment());
+              navigation.popToTop();
+              setImporting(false);
+            } catch (err) {
+              console.error('Error importing file');
+              setImporting(false);
+              // console.error(err);
+              onToggleSnackBar();
+            }
           })
           .catch(err => {
             console.log(err.message, err.code);
+            setImporting(false);
             onToggleSnackBar();
           });
+        setImporting(false);
       })
       .catch((err: any) => {
+        setImporting(false);
         onToggleSnackBar();
       });
   };
@@ -105,6 +119,7 @@ export default function SettingsScreenImport({navigation}) {
                     size={layout.exportImportButtonSize}
                     mode={'contained'}
                     onPress={pickDocument}
+                    loading={importing}
                   />
                 </View>
               </Card.Content>
