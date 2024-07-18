@@ -23,6 +23,7 @@ import {setSettings} from './src/store/reducers/settingsSlice';
 import FullLoading from './src/components/Common/FullLoading.tsx';
 import SettingsScreenExport from "./src/components/SettingsScreenExport.tsx";
 import SettingsScreenImport from "./src/components/SettingsScreenImport.tsx";
+import License from "./src/components/License.tsx";
 
 /**
  * Main Application Component
@@ -149,6 +150,17 @@ function App() {
                 // @ts-ignore
                 options={{
                   title: 'About',
+                  ...screenStackConfig,
+                }}
+                initialParams={{sidebar: false}}
+              />
+              <Stack.Screen
+                name="License"
+                // @ts-ignore
+                component={License}
+                // @ts-ignore
+                options={{
+                  title: 'License',
                   ...screenStackConfig,
                 }}
                 initialParams={{sidebar: false}}

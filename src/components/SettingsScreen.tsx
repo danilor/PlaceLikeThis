@@ -4,7 +4,7 @@ import React from 'react';
 
 import {SettingScreenBlock} from './settings/SettingScreenBlock.tsx';
 import {SettingsScreenItem} from './settings/SettingsScreenItem.tsx';
-import globalSettings from "../config/global.config.tsx";
+import globalSettings from '../config/global.config.tsx';
 
 // @ts-ignore
 export default function SettingsScreen({navigation}) {
@@ -67,7 +67,6 @@ export default function SettingsScreen({navigation}) {
           </SettingScreenBlock>
 
           <SettingScreenBlock navigation={navigation} title="" icon={''}>
-
             <SettingsScreenItem
               icon={'export'}
               label={'Export Data'}
@@ -95,33 +94,15 @@ export default function SettingsScreen({navigation}) {
               divider={false}
               info={globalSettings.version}
             />
-
             <SettingsScreenItem
-              icon={'react'}
-              label={'React Version'}
-              name={'react'}
-              type={'info'}
+              icon={'file-document'}
+              label={'License'}
+              name={'license'}
+              type={'link'}
+              target={'License'}
               divider={false}
-              info={globalSettings.reactVersion}
             />
 
-            <SettingsScreenItem
-              icon={'react'}
-              label={'React Native Version'}
-              name={'react-native'}
-              type={'info'}
-              divider={false}
-              info={globalSettings.reactNativeVersion}
-            />
-
-            <SettingsScreenItem
-              icon={'nodejs'}
-              label={'Node Version'}
-              name={'node'}
-              type={'info'}
-              divider={false}
-              info={globalSettings.nodeVersion}
-            />
           </SettingScreenBlock>
         </ScrollView>
       </SafeAreaView>

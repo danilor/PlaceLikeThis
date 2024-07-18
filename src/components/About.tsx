@@ -9,9 +9,9 @@ import {
 import {Card, Divider, Text, TouchableRipple} from 'react-native-paper';
 import layout from '../config/layout.config.tsx';
 
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import CardContent from 'react-native-paper/lib/typescript/components/Card/CardContent';
-import { getRandomInt } from "../lib/util.lib.tsx";
+import {getRandomInt} from '../lib/util.lib.tsx';
 
 function SocialIcons() {
   const openURL = (url: string) => {
@@ -24,7 +24,8 @@ function SocialIcons() {
         // @ts-ignore
         const singleIcon = layout.images.icons[icon.icon];
         return (
-          <TouchableRipple key={index}
+          <TouchableRipple
+            key={index}
             onPress={() => {
               openURL(icon.url);
             }}>
@@ -68,73 +69,80 @@ export default function About() {
                   All rights reserved {year} © The Arkhive
                 </Text>
                 <Text style={styles.aboutText}>
-                  Place Like This is a project by the team at The Arkhive to
-                  allows users to store information about places they have
-                  visited, add information about them, make it easy to search
-                  for specifics and share them with friends. The application is
-                  built using React Native and Redux Toolkit.
+                  Welcome to Place Like This, your ultimate tool for saving and
+                  organizing information about places and the specific items
+                  they offer. Whether you're looking for that one store that
+                  sells a specific battery or just want to keep track of your
+                  favorite shops, Place Like This is here to make your life
+                  easier.
                 </Text>
                 <Text variant={'titleLarge'} style={styles.aboutText}>
-                  DISCLAIMER
+                  PURPOSE
                 </Text>
                 <Text style={styles.aboutText}>
-                  The information provided by ("we," "us," or "our") on our
-                  mobile application is for general informational purposes only.
-                  All information on our mobile application is provided in good
-                  faith, however we make no representation or warranty of any
-                  kind, express or implied, regarding the accuracy, adequacy,
-                  validity, reliability, availability, or completeness of any
-                  information on our mobile application. UNDER NO CIRCUMSTANCE
-                  SHALL WE HAVE ANY LIABILITY TO YOU FOR ANY LOSS OR DAMAGE OF
-                  ANY KIND INCURRED AS A RESULT OF THE USE OF OUR MOBILE
-                  APPLICATION OR RELIANCE ON ANY INFORMATION PROVIDED ON OUR
-                  MOBILE APPLICATION. YOUR USE OF OUR MOBILE APPLICATION AND
-                  YOUR RELIANCE ON ANY INFORMATION ON OUR MOBILE APPLICATION IS
-                  SOLELY AT YOUR OWN RISK.
+                  Place Like This is designed to provide an easy and efficient
+                  way for users to save detailed information about places and
+                  the specific items they can find there. Unlike other
+                  applications that only show the store name and location, Place
+                  Like This lets you know exactly what each place sells. This
+                  makes it perfect for finding specific products quickly and
+                  effortlessly.
                 </Text>
                 <Text variant={'titleLarge'} style={styles.aboutText}>
-                  LICENSE
+                  FEATURES
                 </Text>
-                <Text style={styles.aboutText}>
-                  Copyright {year} © The Arkhive. Permission is hereby granted,
-                  free of charge, to any person obtaining a copy of this
-                  software and associated documentation files (the "Software"),
-                  to deal in the Software without restriction, including without
-                  limitation the rights to use, copy, modify, merge, publish,
-                  distribute, sublicense, and/or sell copies of the Software,
-                  and to permit persons to whom the Software is furnished to do
-                  so, subject to the following conditions:
-                </Text>
-                <Text style={styles.aboutText}>
-                  The above copyright notice and this permission notice shall be
-                  included in all copies or substantial portions of the
-                  Software.
-                </Text>
-                <Text style={styles.aboutText}>
-                  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
-                  KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-                  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-                  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-                  COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-                  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-                  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-                  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                </Text>
-
+                <View style={styles.aboutText}>
+                  <Text>
+                    1. Save Locations: Easily save the location of any place you
+                    add to the app, ensuring you can always find it again.
+                  </Text>
+                  <Text>
+                    2. Attach Photos: Take a photo and attach it to your saved
+                    place for a visual reminder of what’s available there.
+                  </Text>
+                  <Text>
+                    3. Search Feature: Quickly search for specific items or
+                    places within your saved list.
+                  </Text>
+                  <Text>
+                    4. Share with Friends: Share your saved places with friends
+                    and family to help them find what they need.
+                  </Text>
+                  <Text>
+                    5. Map and Navigation Display: View your saved places on a
+                    map and get directions to them with ease.
+                  </Text>
+                  <Text>
+                    6. Smart Listing: Organize your saved places with smart
+                    listing features, making it simple to find exactly what you
+                    need when you need it.
+                  </Text>
+                </View>
                 <Text variant={'titleLarge'} style={styles.aboutText}>
-                  SPECIAL THANKS
+                  TARGET AUDIENCE
                 </Text>
                 <Text style={styles.aboutText}>
-                  Special thanks to all the people who helped us to test every
-                  feature of this application and provided feedback during the
-                  process.
+                  Place Like This is perfect for anyone who wants a
+                  comprehensive list of places and locations, ready at hand when
+                  needed. Whether you're a busy professional, a dedicated
+                  shopper, or just someone who likes to be organized, Place Like
+                  This will help you keep track of the places you love and the
+                  items they offer.
                 </Text>
-                <Text style={[styles.aboutText, styles.italic]}>
-                  No Animals Were Harmed making this app
+                <Text variant={'titleLarge'} style={styles.aboutText}>
+                  ABOUT THE DEVELOPER
+                </Text>
+                <Text style={styles.aboutText}>
+                  Place Like This is developed by Danilo Ramirez from The
+                  Arkhive. With a commitment to creating useful and engaging
+                  tools, Danilo and The Arkhive team strive to enhance the way
+                  people interact with their surroundings and organize their
+                  lives.
                 </Text>
                 <Divider style={styles.aboutText} />
                 <Text style={[styles.aboutText, styles.italic]}>
-                  Don't let borders separate great minds, and don't let distance break bonds between friends.
+                  Don't let borders separate great minds, and don't let distance
+                  break bonds between friends.
                 </Text>
                 <Image style={styles.bottomImage} source={headerImage} />
               </Card.Content>
@@ -156,7 +164,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: layout.generalMargin,
-
   },
   aboutContainer: {
     // backgroundColor: layout.colors.eva02Red,
@@ -169,7 +176,7 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: layout.aspectsRadio.logo,
   },
-  bottomImage:{
+  bottomImage: {
     width: '100%',
     height: undefined,
     aspectRatio: layout.aspectsRadio.houses,

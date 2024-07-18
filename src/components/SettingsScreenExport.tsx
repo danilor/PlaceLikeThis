@@ -60,7 +60,7 @@ export default function SettingsScreenExport() {
                 </Text>
                 <Text style={styles.text}>
                   <Text style={{fontWeight: 'bold'}}>Note:</Text> This file is
-                  stored in JSON format and can be shared with other users of
+                  stored in J-S-O-N format and can be shared with other users of
                   the application. The higher the resolution of the images
                   stored, the larger the file size will be.
                 </Text>
