@@ -144,12 +144,12 @@ function App() {
                 }}
               />
               <Stack.Screen
-                name="About"
+                name="About Us"
                 // @ts-ignore
                 component={About}
                 // @ts-ignore
                 options={{
-                  title: 'About',
+                  title: 'About Us',
                   ...screenStackConfig,
                 }}
                 initialParams={{sidebar: false}}

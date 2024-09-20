@@ -1,5 +1,5 @@
 {
-  "name": "PlaceLikeThis",
+  "name": "place_like_this",
   "displayName": "Place Like This",
   "version": "0.0.1",
   "private": true,
@@ -39,7 +39,6 @@
     "react-native-share": "^10.2.1",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-vector-icons": "^10.1.0",
-    "react-native-webview": "^13.10.5",
     "react-redux": "^9.1.2",
     "redux": "^5.0.1"
   },
